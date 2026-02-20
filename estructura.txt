@@ -1,0 +1,71 @@
+src/
+ ├── app/
+ │   ├── core/             # Servicios globales, guardias, interceptores, modelos
+ │   │   ├── services/     # API, auth, notificaciones, facturación
+ │   │   ├── guards/       # Autenticación y roles
+ │   │   ├── interceptors/ # Para añadir token, logging, etc.
+ │   │   └── models/       # Interfaces y modelos de datos
+ │   │
+ │   ├── shared/           # Componentes reutilizables y pipes
+ │   │   ├── components/   # Botones, tablas, modales, gráficos
+ │   │   └── pipes/        # Transformaciones de datos comunes
+ │   │
+ │   ├── features/         # Módulos por funcionalidad principal
+ │   │   ├── dashboard/    # Vista principal con métricas y KPIs
+ │   │   ├── clientes/     # CRUD de clientes, detalle técnico (IP, usuario, clave)
+ │   │   ├── equipos/      # CRUD de dispositivos de red
+ │   │   ├── usuarios/     # Gestión de usuarios y roles
+ │   │   ├── facturacion/  # Facturas, pagos, balance, gastos
+ │   │   └── reportes/     # Gráficos, métricas y estadísticas
+ │   │
+ │   ├── layout/           # Componentes de layout (header, sidebar, footer)
+ │   ├── pages/            # Páginas de login, registro, error 404, perfil
+ │   └── app-routing.module.ts
+ │
+ └── assets/               # Imágenes, iconos, archivos estáticos
+
+
+
+src/app/
+ ├── core/                  # Servicios, guards, interceptors, modelos
+ ├── shared/                # Clases, utilidades, pipes
+ ├── layout/                # Header, Sidebar, Footer
+ ├── features/              # Funcionalidades principales (dashboard, clientes, equipos, facturación)
+ │   └── dashboard/
+ │       ├── atoms/         # Botones, etiquetas, iconos, inputs
+ │       ├── molecules/     # Tarjetas, formularios pequeños, gráficos individuales
+ │       ├── organisms/     # Tablas de clientes, panel de KPIs, listas de pagos
+ │       ├── templates/     # Layouts internos del módulo (p.ej., dashboard con grid)
+ │       └── pages/         # DashboardPageComponent con datos reales
+
+##
+Cada módulo tenga su propio routing (muy recomendado):
+  ng generate module features/dashboard --routing
+
+Esto crea un componente reutilizable para mostrar métricas clave, como clientes activos, balance y pagos.
+  ng generate component features/dashboard/components/resumen-kpis
+
+Sección de clientes:
+  ng generate service core/services/clientes
+
+###
+###
+
+Crea un módulo independiente para autenticación (auth), que contendrá el componente de login y sus servicios.
+
+  xxx => ng generate module auth --route login --module app.module.ts
+  xxx => ng generate component auth/login
+
+Esto crea:
+
+  xxx => auth/auth.module.ts — módulo de autenticación con lazy loading configurado.
+  xxx => auth/login/login.component.ts — componente Login
+
+###########
+###########
+
+  ng generate module auth
+  ng generate component auth/login --standalone
+
+  ng generate module features/clientes
+  ng generate component features/clientes/components/list-clientes --standalone

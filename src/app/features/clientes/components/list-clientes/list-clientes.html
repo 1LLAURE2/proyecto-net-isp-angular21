@@ -1,0 +1,15 @@
+<!-- list-clientes.component.html -->
+<h2>Clientes</h2>
+<!-- <button (click)="openCreateModal()">Crear cliente</button> -->
+ <button >Crear cliente</button>
+
+<table>
+  <tr *ngFor="let cliente of clientes">
+    <td>{{ cliente.nombre }}</td>
+    <td>{{ cliente.email }}</td>
+    <td>
+      <!-- <button (click)="openEditModal(cliente)">Editar</button> -->
+      <button >Editar</button>
+    </td>
+  </tr>
+</table>
