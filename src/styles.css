@@ -1,3 +1,36 @@
-/* You can add global styles to this file, and also import other style files */
-
+/* Tailwind */
 @import "tailwindcss";
+
+/* Modo claro por defecto */
+:root {
+  --bg-color: #F8F9FA;         /* fondo claro */
+  --text-color: #1F2937;       /* texto gris oscuro */
+  --primary-color: #0071BC;    /* azul oficial */
+  --secondary-color: #E97124;  /* naranja vibrante */
+  --accent-color: #C1121F;     /* rojo oscuro */
+  --card-bg: #FFFFFF;           /* tarjetas blancas */
+}
+
+.dark {
+  --bg-color: #1A1A1A;         /* fondo oscuro */
+  --text-color: #F8F9FA;       /* texto claro */
+  --primary-color: #66B2FF;    /* azul claro para modo oscuro */
+  --secondary-color: #FFA347;  /* naranja claro */
+  --accent-color: #FF5A5F;     /* rojo claro */
+  --card-bg: #2C2C2C;          /* tarjeta fondo oscuro */
+}
+
+/* Define tus clases personalizadas para botones */
+@layer components {
+  .btn-primary {
+    @apply font-semibold py-2 px-4 rounded transition;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+  }
+
+  .btn-secondary {
+    @apply font-semibold py-2 px-4 rounded transition;
+    background-color: var(--secondary-color, 107 114 128); /* fallback */
+    color: var(--text-color);
+  }
+}

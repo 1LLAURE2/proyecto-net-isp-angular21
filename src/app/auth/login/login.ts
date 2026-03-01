@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -7,7 +7,8 @@ import { FormsModule } from '@angular/forms';
   standalone:true,
   imports: [CommonModule, FormsModule],
   templateUrl: './login.html',
-  styleUrl: './login.css',
+  styleUrls: ['./login.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class Login {
   email: string = '';
@@ -19,5 +20,10 @@ export class Login {
     console.log('Contraseña:', this.password);
 
     // Ejemplo: podrías llamar a un servicio de autenticación aquí
+  }
+
+  toggleTheme() {
+    document.documentElement.classList.toggle('dark');
+    console.log('dark mode toggled', document.documentElement.classList.contains('dark'));
   }
 }

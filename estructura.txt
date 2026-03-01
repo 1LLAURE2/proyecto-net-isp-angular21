@@ -69,3 +69,8 @@ Esto crea:
 
   ng generate module features/clientes
   ng generate component features/clientes/components/list-clientes --standalone
+
+### USAR TAILWILD EN EL PROYECTO
+
+  npm install -D tailwindcss postcss autoprefixer
+  npx tailwindcss init
