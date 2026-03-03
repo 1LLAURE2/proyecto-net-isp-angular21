@@ -141,3 +141,20 @@ export const AUTH_ROUTES: Routes = [
         .then(m => m.LoginComponent)
   }
 ];
+
+
+
+
+
+*****
+
+Lo ideal sería que el backend devuelva algo así:
+
+{
+  "token": "...",
+  "user": {
+    "id": 1,
+    "email": "admin@example.com",
+    "roles": ["ADMIN"]
+  }
+}

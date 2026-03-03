@@ -3,6 +3,7 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { UserModel } from '../domain/user.model';
 import { Observable } from 'rxjs';
+import { AuthToken } from '../domain/auth-token.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +14,9 @@ export class AuthApiService {
 
   constructor(private http: HttpClient) {}
 
-  login(username: string, password: string): Observable<UserModel> {
-    return this.http.post<UserModel>(`${this.baseUrl}/login`, {
-      username,
+  login(email: string, password: string): Observable<AuthToken> {
+    return this.http.post<AuthToken>(`${this.baseUrl}/login`, {
+      email,
       password
     });
   }

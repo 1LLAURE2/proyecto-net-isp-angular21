@@ -8,7 +8,7 @@ export class LoginUseCase {
 
   private repository = inject(AuthRepositoryImpl);
 
-  execute(username: string, password: string) {
-    return this.repository.login(username, password);
+  execute(email: string, password: string) {
+    return this.repository.login(email, password);
   }
 }

@@ -14,13 +14,30 @@ export class LoginPage {
   private loginUseCase = inject(LoginUseCase);
   private router = inject(Router);
 
-  username = '';
+  email = '';
   password = '';
 
   login() {
-    this.loginUseCase.execute(this.username, this.password)
-      .subscribe(() => {
-        this.router.navigate(['/clientes']);
+    this.loginUseCase.execute(this.email, this.password)
+      .subscribe({
+        next: () => this.router.navigate(['/clientes']),
+        error: (err) => alert('Error en login: ' + err.message)
       });
+  }
+
+  toggleTheme() {
+    // Ejemplo simple: cambia variable CSS para dark/light
+    const root = document.documentElement;
+    if (root.style.getPropertyValue('--bg-color') === 'white') {
+      root.style.setProperty('--bg-color', '#1a202c');
+      root.style.setProperty('--text-color', 'white');
+      root.style.setProperty('--card-bg', '#2d3748');
+      root.style.setProperty('--primary-color', '#3182ce');
+    } else {
+      root.style.setProperty('--bg-color', 'white');
+      root.style.setProperty('--text-color', 'black');
+      root.style.setProperty('--card-bg', 'white');
+      root.style.setProperty('--primary-color', '#3182ce');
+    }
   }
 }
