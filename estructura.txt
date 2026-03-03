@@ -74,3 +74,100 @@ Esto crea:
 
   npm install -D tailwindcss postcss autoprefixer
   npx tailwindcss init
+
+###
+clientes/
+│
+├── domain/
+│   ├── cliente.model.ts
+│   ├── cliente.repository.ts   # interface
+│   └── cliente.entity.ts
+│
+├── application/
+│   ├── create-cliente.usecase.ts
+│   ├── get-clientes.usecase.ts
+│   └── update-cliente.usecase.ts
+│
+├── infrastructure/
+│   ├── cliente-api.service.ts
+│   └── cliente.repository.impl.ts
+│
+├── ui/
+│   ├── pages/
+│   │   ├── list-clientes.page.ts
+│   │   └── create-cliente.page.ts
+│   └── components/
+│
+└── clientes.routes.ts
+
+###
+ng g interface domains/clientes/clientes-routes --type=routes
+
+ng g interface features/clientes/clientes-routes --type=routes
+
+ng g interface features/clientes/domain/cliente --type=model
+ng g interface features/clientes/domain/cliente --type=entity
+ng g interface features/clientes/domain/cliente-repository
+
+  ng g service features/clientes/application/create-cliente --skip-tests
+  ng g service features/clientes/application/get-clientes --skip-tests
+  ng g service features/clientes/application/update-cliente --skip-tests
+
+  ng g service features/clientes/infrastructure/cliente-api --skip-tests
+  ng g service features/clientes/infrastructure/cliente-repository-impl --skip-tests
+
+ng g component features/clientes/ui/pages/list-clientes \
+    --standalone \
+    --change-detection OnPush \
+    --style scss \
+    --skip-tests
+
+- DOMAIN:
+  - MODELO: ng g interface domains/clientes/domain/cliente --type=model
+  - ENTIDAD: ng g interface domains/clientes/domain/cliente --type=entity
+  - REPOSITORIO (CONTRATO): ng g interface domains/clientes/domain/cliente-repository
+- APPLICATION:
+  - ng g service domains/clientes/application/create-cliente --skip-tests
+  - ng g service domains/clientes/application/get-clientes --skip-tests
+  - ng g service domains/clientes/application/update-cliente --skip-tests
+  Luego renombramos manualmente:
+  create-cliente.service.ts → create-cliente.usecase.ts
+  get-clientes.service.ts → get-clientes.usecase.ts
+  update-cliente.service.ts → update-cliente.usecase.ts
+- INFRAESTRUCTURE:
+  - ng g service domains/clientes/infrastructure/cliente-api --skip-tests
+  - ng g service domains/clientes/infrastructure/cliente-repository-impl --skip-tests
+- UI:
+  PARA LISTAR :
+    ng g component domains/clientes/ui/pages/list-clientes \
+    --standalone \
+    --change-detection OnPush \
+    --style scss \
+    --skip-tests
+
+    Renombrar a:  list-clientes.page.ts
+
+  PARA CREAR :
+    ng g component domains/clientes/ui/pages/create-cliente \
+    --standalone \
+    --change-detection OnPush \
+    --style scss \
+    --skip-tests
+
+    Renombrar a:  create-cliente.page.ts
+
+  RUTAS:
+    Crear manualmente
+      src/app/domains/clientes/clientes.routes.ts
+
+
+### COMO EJECUTAR:
+Desarrollo
+  ng serve
+  (usa development por defecto)
+
+QA
+  ng serve --configuration=qa
+
+Producción
+  ng build --configuration=production

@@ -6,5 +6,6 @@ export const routes: Routes = [
   // { path: 'mi-primer-componente', component: NombreDelComponente },
   // { path: 'clientes', loadChildren: () => import('./clientes/clientes.module').then(m => m.ClientesModule) },
   // { path: 'equipos', loadChildren: () => import('./equipos/equipos.module').then(m => m.EquiposModule) },
+  { path: 'clientes',loadChildren: ()=> import('./features/clientes/clientes.routes').then(m=>m.CLIENTES_ROUTES)},
   { path: '', redirectTo: 'login', pathMatch: 'full' } // ruta por defecto
 ];
