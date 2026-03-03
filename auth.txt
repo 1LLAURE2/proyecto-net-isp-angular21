@@ -1,0 +1,143 @@
+Viendo tu estructura actual:
+
+app/
+ ├── auth/
+ ├── core/
+ └── features/
+      └── clientes/
+
+Te doy la respuesta directa como arquitecto:
+
+👉 No es ideal tener auth al mismo nivel que features si estás usando arquitectura por dominio.
+
+Te explico por qué y cuál es la mejor forma profesional de organizarlo.
+
+🎯 1️⃣ ¿Auth es Core o Feature?
+
+Auth NO es:
+
+❌ Un core técnico puro
+❌ Un simple layout
+❌ Un servicio global aislado
+
+Auth es un dominio transversal.
+
+Tiene:
+
+- Login
+- Refresh token
+- Manejo de sesión
+- Roles
+- Permisos
+- Possibly multi-tenant
+
+Eso es lógica de negocio.
+
+🏗 Arquitectura Correcta (Recomendada)
+
+Yo lo reorganizaría así:
+
+app/
+ ├── core/              # Infraestructura global (sin negocio)
+ ├── shared/            # UI reutilizable
+ ├── domains/           # 🔥 TODO dominio va aquí
+ │    ├── auth/
+ │    ├── clientes/
+ │    ├── facturacion/
+ │    └── tickets/
+ └── app.routes.ts
+🧠 ¿Por qué auth debe estar en domains?
+
+Porque tiene:
+
+- Modelo de usuario
+- Casos de uso (login, logout, refresh)
+- Infraestructura (api)
+- UI (login page)
+- Rutas propias
+
+Eso es un dominio completo.
+
+🎯 2️⃣ Cómo debería verse auth correctamente
+domains/auth/
+│
+├── domain/
+│   ├── user.model.ts
+│   └── auth.repository.ts
+│
+├── application/
+│   ├── login.usecase.ts
+│   ├── logout.usecase.ts
+│   └── refresh-token.usecase.ts
+│
+├── infrastructure/
+│   ├── auth-api.service.ts
+│   └── auth.repository.impl.ts
+│
+├── ui/
+│   └── pages/
+│        └── login.page.ts
+│
+└── auth.routes.ts
+
+Eso mantiene consistencia con clientes.
+
+🔐 3️⃣ Entonces, ¿qué va en core?
+
+Core debe tener SOLO cosas técnicas globales:
+
+core/
+ ├── guards/
+ │    ├── auth.guard.ts
+ │    └── role.guard.ts
+ │
+ ├── interceptors/
+ │    ├── auth.interceptor.ts
+ │    └── error.interceptor.ts
+ │
+ ├── services/
+ │    └── session.service.ts
+ │
+ └── layout/
+
+Core no tiene lógica de login.
+
+Core solo ejecuta:
+
+- Validar token
+- Agregar header Authorization
+- Proteger rutas
+
+### Cómo crear auth correctamente
+📁 Crear dominio auth
+mkdir -p src/app/domains/auth
+📁 DOMAIN
+ng g interface domains/auth/domain/user --type=model
+ng g interface domains/auth/domain/auth-repository
+📁 APPLICATION
+ng g service domains/auth/application/login --skip-tests
+ng g service domains/auth/application/logout --skip-tests
+ng g service domains/auth/application/refresh-token --skip-tests
+
+Renombrar a .usecase.ts
+
+📁 INFRASTRUCTURE
+ng g service domains/auth/infrastructure/auth-api --skip-tests
+ng g service domains/auth/infrastructure/auth-repository-impl --skip-tests
+📁 UI
+ng g component domains/auth/ui/pages/login \
+--standalone \
+--change-detection OnPush \
+--style scss \
+--skip-tests
+📄 auth.routes.ts
+import { Routes } from '@angular/router';
+
+export const AUTH_ROUTES: Routes = [
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./ui/pages/login/login.component')
+        .then(m => m.LoginComponent)
+  }
+];
