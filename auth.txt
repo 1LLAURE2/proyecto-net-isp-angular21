@@ -158,3 +158,24 @@ Lo ideal sería que el backend devuelva algo así:
     "roles": ["ADMIN"]
   }
 }
+
+
+
+*********
+
+app/
+├── app.config.ts      # configuración global (routing + interceptores)
+├── app.routes.ts      # rutas lazy loading
+├── app.ts             # root component
+├── core/              # interceptores, guards, servicios globales
+├── domains/
+│    ├── auth/
+│    └── clientes/
+└── environments/
+
+Todo listo para:
+
+- Lazy loading
+- JWT Auth centralizado
+- Multi-feature DDD (auth, clientes, etc.)
+- Standalone components
