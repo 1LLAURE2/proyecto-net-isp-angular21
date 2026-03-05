@@ -7,39 +7,37 @@ import { SidebarComponent } from "../components/sidebar.component";
   standalone: true,
   imports: [RouterModule, SidebarComponent,CommonModule],
   template: `
-    <div class="flex min-h-screen"
-      [ngStyle]="{'background-color':'var(--bg-color)','color':'var(--text-color)'}">
+    <div
+      class="flex min-h-screen bg-background dark:bg-background-dark text-text dark:text-text-dark"
+    >
 
-      <!-- SIDEBAR -->
+      <!-- Sidebar -->
       <app-sidebar
         [sidebarOpen]="sidebarOpen"
-        (closeSidebar)="toggleSidebar()">
-      </app-sidebar>
+        (closeSidebar)="toggleSidebar()"
+      ></app-sidebar>
 
-      <!-- OVERLAY MOBILE -->
+      <!-- Overlay móvil -->
       <div
         *ngIf="sidebarOpen"
-        class="fixed inset-0 md:hidden"
-        style="background: rgba(0,0,0,0.4)"
-        (click)="toggleSidebar()">
-      </div>
+        class="fixed inset-0 bg-black/40 md:hidden"
+        (click)="toggleSidebar()"
+      ></div>
 
-      <!-- CONTENIDO -->
+      <!-- Contenido principal -->
       <main class="flex-1 p-4 md:p-6">
 
-        <!-- BOTÓN MOBILE -->
+        <!-- Botón hamburguesa mobile -->
         <button
-          class="md:hidden mb-4 px-3 py-2 rounded-lg text-white"
-          [ngStyle]="{'background-color':'var(--primary-color)'}"
+          class="md:hidden mb-4 px-3 py-2 rounded-lg bg-primary text-amber-800"
           (click)="toggleSidebar()"
+          aria-label="Abrir menú lateral"
         >
-          ☰ Menu
+          ☰
         </button>
 
         <router-outlet></router-outlet>
-
       </main>
-
     </div>
   `
 })
