@@ -73,6 +73,26 @@
 
   </div>
 
+  <div class="flex items-center justify-end mb-4 gap-2">
+
+  <label class="text-sm opacity-70" for="pageSizeSelect">Mostrar:</label>
+
+  <select
+    id="pageSizeSelect"
+    [(ngModel)]="itemsPerPage"
+    (change)="onPageSizeChange(itemsPerPage)"
+    class="px-3 py-1 rounded border"
+    [ngStyle]="{'border-color':'var(--primary-color)'}">
+
+    <option *ngFor="let size of pageSizeOptions" [value]="size">
+      {{ size }}
+    </option>
+
+  </select>
+
+  <span class="text-sm opacity-70">registros por página</span>
+
+</div>
 
   <!-- CLIENTES MOBILE (CARDS) -->
   <div class="md:hidden space-y-4">

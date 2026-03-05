@@ -28,6 +28,7 @@ export class ListClientes {
   planFilter = ''
 
   currentPage = 1
+  pageSizeOptions = [5, 10, 50];   // opciones del select
   itemsPerPage = 5
 
   clients = [
@@ -172,6 +173,11 @@ export class ListClientes {
     pages.push(total);
 
     return pages;
+  }
+
+  onPageSizeChange(newSize: number) {
+    this.itemsPerPage = newSize;
+    this.currentPage = 1; // resetear a la primera página al cambiar tamaño
   }
 
 }
