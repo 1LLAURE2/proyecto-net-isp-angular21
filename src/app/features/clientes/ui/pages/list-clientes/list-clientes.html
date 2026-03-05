@@ -132,6 +132,42 @@
 
     </div>
 
+    <!-- PAGINACION MÓVIL -->
+<div class="flex justify-center gap-2 mt-4 md:hidden">
+
+  <button
+    class="px-3 py-1 rounded border"
+    (click)="changePage(currentPage - 1)"
+    [disabled]="currentPage === 1">
+    Anterior
+  </button>
+
+  <ng-container *ngFor="let page of getVisiblePages()">
+
+    <button
+      *ngIf="page !== '...'"
+      class="px-3 py-1 rounded border"
+      [class.font-bold]="currentPage === page"
+      (click)="changePage(page)">
+      {{ page }}
+    </button>
+
+    <span
+      *ngIf="page === '...'"
+      class="px-2 py-1 text-gray-500">
+      ...
+    </span>
+
+  </ng-container>
+
+  <button
+    class="px-3 py-1 rounded border"
+    (click)="changePage(currentPage + 1)"
+    [disabled]="currentPage === totalPages()">
+    Siguiente
+  </button>
+
+</div>
   </div>
 
 
@@ -215,44 +251,54 @@
 
 
     <!-- PAGINACION -->
-    <div
-    class="flex flex-col sm:flex-row gap-3 items-center justify-between p-4 border-t"
-    [ngStyle]="{'border-color':'var(--primary-color)'}">
+    <div class="flex flex-wrap gap-2 justify-center">
 
-      <p class="text-sm opacity-70">
-        Página {{currentPage}} de {{totalPages()}}
-      </p>
+  <!-- ANTERIOR -->
+  <button
+  class="px-3 py-1 rounded border"
+  (click)="changePage(currentPage - 1)"
+  [disabled]="currentPage === 1">
 
-      <div class="flex flex-wrap gap-2 justify-center">
+    Anterior
 
-        <button
-        class="px-3 py-1 rounded border"
-        (click)="changePage(currentPage - 1)">
-          Anterior
-        </button>
+  </button>
 
-        <button
-        *ngFor="let page of [].constructor(totalPages()); let i = index"
-        class="px-3 py-1 rounded border"
-        [class.font-bold]="currentPage === i + 1"
-        [ngStyle]="currentPage === i + 1
-        ? {'background-color':'var(--primary-color)','color':'white'}
-        : {}"
-        (click)="changePage(i + 1)">
+  <!-- PAGINAS -->
+  <ng-container *ngFor="let page of getVisiblePages()">
 
-          {{i + 1}}
+    <!-- NUMERO -->
+    <button
+    *ngIf="page !== '...'"
+    class="px-3 py-1 rounded border"
+    [class.font-bold]="currentPage === page"
+    (click)="changePage(page)">
 
-        </button>
+    {{ page }}
 
-        <button
-        class="px-3 py-1 rounded border"
-        (click)="changePage(currentPage + 1)">
-          Siguiente
-        </button>
+  </button>
 
-      </div>
+    <!-- PUNTOS -->
+    <span
+    *ngIf="page === '...'"
+    class="px-2 py-1 text-gray-500">
 
-    </div>
+      ...
+
+    </span>
+
+  </ng-container>
+
+  <!-- SIGUIENTE -->
+  <button
+  class="px-3 py-1 rounded border"
+  (click)="changePage(currentPage + 1)"
+  [disabled]="currentPage === totalPages()">
+
+    Siguiente
+
+  </button>
+
+</div>
 
   </div>
 

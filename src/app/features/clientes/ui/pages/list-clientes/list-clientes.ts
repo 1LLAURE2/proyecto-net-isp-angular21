@@ -130,9 +130,48 @@ export class ListClientes {
     return Math.ceil(this.filteredClients().length / this.itemsPerPage)
   }
 
-  changePage(page: number) {
-    if (page < 1 || page > this.totalPages()) return
-    this.currentPage = page
+  changePage(page: number | string ) {
+    // if (page < 1 || page > this.totalPages()) return
+    // this.currentPage = page
+    if (page === '...') return;
+    const pageNumber = Number(page);
+    if (pageNumber < 1 || pageNumber > this.totalPages()) return;
+    this.currentPage = pageNumber;
+  }
+
+
+  getVisiblePages(): (number | string)[] {
+
+    const total = this.totalPages();
+    const current = this.currentPage;
+
+    const pages: (number | string)[] = [];
+
+    if (total <= 7) {
+      for (let i = 1; i <= total; i++) pages.push(i);
+      return pages;
+    }
+
+    pages.push(1);
+
+    if (current > 4) {
+      pages.push('...');
+    }
+
+    const start = Math.max(2, current - 1);
+    const end = Math.min(total - 1, current + 1);
+
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+
+    if (current < total - 3) {
+      pages.push('...');
+    }
+
+    pages.push(total);
+
+    return pages;
   }
 
 }
