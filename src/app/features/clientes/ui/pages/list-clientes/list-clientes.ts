@@ -66,4 +66,14 @@ export class ListClientes {
     })
 
   }
+
+  resetFilters() {
+  this.searchTerm = ''
+  this.statusFilter = ''
+  this.planFilter = ''
+}
+
+addClient() {
+  console.log('Abrir formulario de nuevo cliente')
+}
 }

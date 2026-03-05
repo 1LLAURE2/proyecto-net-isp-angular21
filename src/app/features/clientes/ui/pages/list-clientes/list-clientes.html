@@ -6,13 +6,31 @@
     </ul> -->
 
     <!--  -->
-    <div class="min-h-screen p-4 md:p-6"
+<div class="min-h-screen p-4 md:p-6"
      [ngStyle]="{'background-color':'var(--bg-color)', 'color':'var(--text-color)'}">
 
   <!-- HEADER -->
-  <div class="mb-6">
-    <h1 class="text-2xl md:text-3xl font-bold">Administración de Clientes</h1>
-    <p class="text-sm opacity-70">Gestiona tus clientes y sus planes</p>
+  <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+
+    <div>
+      <h1 class="text-2xl md:text-3xl font-bold">
+        Administración de Clientes
+      </h1>
+      <p class="text-sm opacity-70">
+        Gestiona tus clientes y sus planes
+      </p>
+    </div>
+
+    <!-- BOTÓN NUEVO CLIENTE -->
+    <button
+      class="px-4 py-2 rounded-lg text-white font-medium flex items-center gap-2"
+      [ngStyle]="{'background-color':'var(--secondary-color)'}"
+      (click)="addClient()">
+
+      ➕ Nuevo Cliente
+
+    </button>
+
   </div>
 
   <!-- FILTROS -->
@@ -30,7 +48,7 @@
       />
     </div>
 
-    <!-- FILTRO ESTADO -->
+    <!-- ESTADO -->
     <div class="w-full md:w-48">
       <select
         [(ngModel)]="statusFilter"
@@ -45,7 +63,7 @@
       </select>
     </div>
 
-    <!-- FILTRO PLAN -->
+    <!-- PLAN -->
     <div class="w-full md:w-48">
       <select
         [(ngModel)]="planFilter"
@@ -60,6 +78,16 @@
       </select>
     </div>
 
+    <!-- RESET FILTROS -->
+    <button
+      class="px-4 py-2 rounded-lg border font-medium"
+      (click)="resetFilters()"
+      [ngStyle]="{'border-color':'var(--accent-color)', 'color':'var(--accent-color)'}">
+
+      Restablecer
+
+    </button>
+
   </div>
 
   <!-- TABLA -->
@@ -70,9 +98,8 @@
 
       <table class="min-w-full text-sm">
 
-        <thead
-          class="text-left border-b"
-          [ngStyle]="{'border-color':'var(--primary-color)'}">
+        <thead class="text-left border-b"
+               [ngStyle]="{'border-color':'var(--primary-color)'}">
 
           <tr class="text-xs uppercase tracking-wide">
             <th class="px-6 py-3">Cliente</th>
@@ -98,35 +125,11 @@
             </td>
 
             <td class="px-6 py-4">
-
-              <span
-                class="px-3 py-1 rounded-full text-xs font-semibold"
-                [ngClass]="{
-                  'bg-blue-100 text-blue-600': client.plan==='premium',
-                  'bg-green-100 text-green-600': client.plan==='basico',
-                  'bg-yellow-100 text-yellow-600': client.plan==='estandar'
-                }">
-
-                {{client.plan}}
-
-              </span>
-
+              {{client.plan}}
             </td>
 
             <td class="px-6 py-4">
-
-              <span
-                class="px-3 py-1 rounded-full text-xs font-semibold"
-                [ngClass]="{
-                  'bg-green-100 text-green-700': client.status==='activo',
-                  'bg-yellow-100 text-yellow-700': client.status==='pendiente',
-                  'bg-red-100 text-red-700': client.status==='inactivo'
-                }">
-
-                {{client.status}}
-
-              </span>
-
+              {{client.status}}
             </td>
 
             <td class="px-6 py-4 flex gap-2">
