@@ -14,8 +14,23 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/auth/ui/pages/login/login.page').then(m => m.LoginPage)
   },
-  { path: 'clientes', canActivate: [AuthGuard], loadChildren: () => import('./features/clientes/clientes.routes').then(m => m.CLIENTES_ROUTES) },
-  { path: '', redirectTo: 'login', pathMatch: 'full' }, // ruta por defecto
+  // { path: 'clientes', canActivate: [AuthGuard], loadChildren: () => import('./features/clientes/clientes.routes').then(m => m.CLIENTES_ROUTES) },
+  // { path: '', redirectTo: 'login', pathMatch: 'full' }, // ruta por defecto
+
+
+  {
+    path: 'dashboard',
+    loadChildren: () =>
+      import('./features/dashboard/dashboard.routes')
+        .then(m => m.DASHBOARD_ROUTES)
+  },
+
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+
   {
     path: '**',
     redirectTo: 'login'

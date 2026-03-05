@@ -20,7 +20,7 @@ export class LoginPage {
   login() {
     this.loginUseCase.execute(this.email, this.password)
       .subscribe({
-        next: () => this.router.navigate(['/clientes']),
+        next: () => this.router.navigate(['/dashboard']),
         error: (err) => alert('Error en login: ' + err.message)
       });
   }
