@@ -1,28 +1,23 @@
-<h1>Clientes</h1>
-<!-- <ul>
-      <li *ngFor="let cliente of clientes">
-        {{ cliente.nombre }} - {{ cliente.email }}
-      </li>
-    </ul> -->
-
-<!--  -->
-<div class="min-h-screen p-4 md:p-6" [ngStyle]="{'background-color':'var(--bg-color)', 'color':'var(--text-color)'}">
+<div class="min-h-screen p-4 md:p-6"
+[ngStyle]="{'background-color':'var(--bg-color)', 'color':'var(--text-color)'}">
 
   <!-- HEADER -->
-  <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
 
     <div>
       <h1 class="text-2xl md:text-3xl font-bold">
         Administración de Clientes
       </h1>
+
       <p class="text-sm opacity-70">
         Gestiona tus clientes y sus planes
       </p>
     </div>
 
-    <!-- BOTÓN NUEVO CLIENTE -->
-    <button class="px-4 py-2 rounded-lg text-white font-medium flex items-center gap-2"
-      [ngStyle]="{'background-color':'var(--secondary-color)'}" (click)="addClient()">
+    <button
+      class="w-full sm:w-auto px-4 py-2 rounded-lg text-white font-medium flex items-center justify-center gap-2"
+      [ngStyle]="{'background-color':'var(--secondary-color)'}"
+      (click)="addClient()">
 
       ➕ Nuevo Cliente
 
@@ -30,46 +25,47 @@
 
   </div>
 
+
   <!-- FILTROS -->
-  <div class="rounded-xl shadow-sm p-4 mb-6 flex flex-col md:flex-row gap-4"
-    [ngStyle]="{'background-color':'var(--card-bg)'}">
+  <div
+  class="rounded-xl shadow-sm p-4 mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+  [ngStyle]="{'background-color':'var(--card-bg)'}">
 
-    <!-- BUSCADOR -->
-    <div class="flex-1">
-      <input type="text" placeholder="Buscar cliente..."
-        class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2"
-        [ngStyle]="{'border-color':'var(--primary-color)'}" [(ngModel)]="searchTerm" />
-    </div>
+    <input
+      type="text"
+      placeholder="Buscar cliente..."
+      class="w-full px-4 py-2 rounded-lg border focus:outline-none"
+      [ngStyle]="{'border-color':'var(--primary-color)'}"
+      [(ngModel)]="searchTerm"/>
 
-    <!-- ESTADO -->
-    <div class="w-full md:w-48">
-      <select [(ngModel)]="statusFilter" class="w-full px-4 py-2 rounded-lg border"
-        [ngStyle]="{'border-color':'var(--primary-color)'}">
+    <select
+      [(ngModel)]="statusFilter"
+      class="w-full px-4 py-2 rounded-lg border"
+      [ngStyle]="{'border-color':'var(--primary-color)'}">
 
-        <option value="">Estado</option>
-        <option value="activo">Activo</option>
-        <option value="pendiente">Pendiente</option>
-        <option value="inactivo">Inactivo</option>
+      <option value="">Estado</option>
+      <option value="activo">Activo</option>
+      <option value="pendiente">Pendiente</option>
+      <option value="inactivo">Inactivo</option>
 
-      </select>
-    </div>
+    </select>
 
-    <!-- PLAN -->
-    <div class="w-full md:w-48">
-      <select [(ngModel)]="planFilter" class="w-full px-4 py-2 rounded-lg border"
-        [ngStyle]="{'border-color':'var(--primary-color)'}">
+    <select
+      [(ngModel)]="planFilter"
+      class="w-full px-4 py-2 rounded-lg border"
+      [ngStyle]="{'border-color':'var(--primary-color)'}">
 
-        <option value="">Plan</option>
-        <option value="premium">Premium</option>
-        <option value="basico">Básico</option>
-        <option value="estandar">Estándar</option>
+      <option value="">Plan</option>
+      <option value="premium">Premium</option>
+      <option value="basico">Básico</option>
+      <option value="estandar">Estándar</option>
 
-      </select>
-    </div>
+    </select>
 
-    <!-- RESET FILTROS -->
-    <button class="px-4 py-2 rounded-lg border font-medium" (click)="resetFilters()"
-      [ngStyle]="{'border-color':'var(--accent-color)', 'color':'var(--accent-color)'}">
+    <button
+      class="w-full px-4 py-2 rounded-lg border font-medium"
+      (click)="resetFilters()"
+      [ngStyle]="{'border-color':'var(--accent-color)','color':'var(--accent-color)'}">
 
       Restablecer
 
@@ -77,14 +73,79 @@
 
   </div>
 
-  <!-- TABLA -->
-  <div class="rounded-xl shadow-sm overflow-hidden" [ngStyle]="{'background-color':'var(--card-bg)'}">
+
+  <!-- CLIENTES MOBILE (CARDS) -->
+  <div class="md:hidden space-y-4">
+
+    <div
+    *ngFor="let client of paginatedClients()"
+    class="p-4 rounded-xl shadow border"
+    [ngStyle]="{
+      'background-color':'var(--card-bg)',
+      'border-color':'var(--primary-color)'
+    }">
+
+      <div class="flex justify-between items-start mb-2">
+
+        <h3 class="font-semibold text-lg">
+          {{client.name}}
+        </h3>
+
+        <span
+        class="text-xs px-2 py-1 rounded text-white"
+        [ngStyle]="{'background-color':'var(--primary-color)'}">
+
+          {{client.plan}}
+
+        </span>
+
+      </div>
+
+      <p class="text-sm opacity-80 mb-1">
+        📧 {{client.email}}
+      </p>
+
+      <p class="text-sm mb-3">
+        Estado:
+        <strong>{{client.status}}</strong>
+      </p>
+
+      <div class="flex gap-2">
+
+        <button
+        class="flex-1 px-3 py-2 text-white rounded-md text-sm"
+        [ngStyle]="{'background-color':'var(--primary-color)'}">
+
+          Editar
+
+        </button>
+
+        <button
+        class="flex-1 px-3 py-2 text-white rounded-md text-sm"
+        [ngStyle]="{'background-color':'var(--accent-color)'}">
+
+          Eliminar
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- TABLA DESKTOP -->
+  <div class="hidden md:block rounded-xl shadow-sm overflow-hidden"
+  [ngStyle]="{'background-color':'var(--card-bg)'}">
 
     <div class="overflow-x-auto">
 
-      <table class="min-w-full text-sm">
+      <table class="min-w-[700px] w-full text-sm">
 
-        <thead class="text-left border-b" [ngStyle]="{'border-color':'var(--primary-color)'}">
+        <thead
+        class="text-left border-b"
+        [ngStyle]="{'border-color':'var(--primary-color)'}">
 
           <tr class="text-xs uppercase tracking-wide">
             <th class="px-6 py-3">Cliente</th>
@@ -98,8 +159,15 @@
 
         <tbody>
 
-          <tr *ngFor="let client of paginatedClients()"
-            class="border-b hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+          <tr
+          *ngFor="let client of paginatedClients()"
+          class="border-b transition"
+          [ngStyle]="{
+            'border-color':'var(--primary-color)',
+            'background-color':'var(--card-bg)'
+          }"
+          [class.hover:bg-gray-100]="!isDarkMode"
+          [class.hover:bg-gray-800]="isDarkMode">
 
             <td class="px-6 py-4 font-medium">
               {{client.name}}
@@ -119,14 +187,20 @@
 
             <td class="px-6 py-4 flex gap-2">
 
-              <button class="px-3 py-1 text-white rounded-md text-xs"
-                [ngStyle]="{'background-color':'var(--primary-color)'}">
+              <button
+              class="px-3 py-1 text-white rounded-md text-xs"
+              [ngStyle]="{'background-color':'var(--primary-color)'}">
+
                 Editar
+
               </button>
 
-              <button class="px-3 py-1 text-white rounded-md text-xs"
-                [ngStyle]="{'background-color':'var(--accent-color)'}">
+              <button
+              class="px-3 py-1 text-white rounded-md text-xs"
+              [ngStyle]="{'background-color':'var(--accent-color)'}">
+
                 Eliminar
+
               </button>
 
             </td>
@@ -137,40 +211,47 @@
 
       </table>
 
-      <!--  -->
-      <div class="flex flex-col md:flex-row items-center justify-between p-4 border-t gap-3"
-        [ngStyle]="{'border-color':'var(--primary-color)'}">
+    </div>
 
-        <p class="text-sm opacity-70">
-          Página {{currentPage}} de {{totalPages()}}
-        </p>
 
-        <div class="flex gap-2">
+    <!-- PAGINACION -->
+    <div
+    class="flex flex-col sm:flex-row gap-3 items-center justify-between p-4 border-t"
+    [ngStyle]="{'border-color':'var(--primary-color)'}">
 
-          <!-- ANTERIOR -->
-          <button class="px-3 py-1 rounded border" (click)="changePage(currentPage - 1)">
-            Anterior
-          </button>
+      <p class="text-sm opacity-70">
+        Página {{currentPage}} de {{totalPages()}}
+      </p>
 
-          <!-- NÚMEROS -->
-          <button *ngFor="let page of [].constructor(totalPages()); let i = index" class="px-3 py-1 rounded border"
-            [class.font-bold]="currentPage === i + 1"
-            [ngStyle]="currentPage === i + 1 ? {'background-color':'var(--primary-color)', 'color':'white'} : {}"
-            (click)="changePage(i + 1)">
+      <div class="flex flex-wrap gap-2 justify-center">
 
-            {{i + 1}}
+        <button
+        class="px-3 py-1 rounded border"
+        (click)="changePage(currentPage - 1)">
+          Anterior
+        </button>
 
-          </button>
+        <button
+        *ngFor="let page of [].constructor(totalPages()); let i = index"
+        class="px-3 py-1 rounded border"
+        [class.font-bold]="currentPage === i + 1"
+        [ngStyle]="currentPage === i + 1
+        ? {'background-color':'var(--primary-color)','color':'white'}
+        : {}"
+        (click)="changePage(i + 1)">
 
-          <!-- SIGUIENTE -->
-          <button class="px-3 py-1 rounded border" (click)="changePage(currentPage + 1)">
-            Siguiente
-          </button>
+          {{i + 1}}
 
-        </div>
+        </button>
+
+        <button
+        class="px-3 py-1 rounded border"
+        (click)="changePage(currentPage + 1)">
+          Siguiente
+        </button>
 
       </div>
-      <!--  -->
+
     </div>
 
   </div>

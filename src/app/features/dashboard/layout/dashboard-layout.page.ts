@@ -20,7 +20,7 @@ import { SidebarComponent } from "../components/sidebar.component";
       <!-- Overlay móvil -->
       <div
         *ngIf="sidebarOpen"
-        class="fixed inset-0 bg-black/40 md:hidden"
+        class="fixed inset-0 bg-black/40 md:hidden transition-opacity duration-300"
         (click)="toggleSidebar()"
       ></div>
 
@@ -29,7 +29,9 @@ import { SidebarComponent } from "../components/sidebar.component";
 
         <!-- Botón hamburguesa mobile -->
         <button
-          class="md:hidden mb-4 px-3 py-2 rounded-lg bg-primary text-amber-800"
+          class="md:hidden mb-4 px-3 py-2 rounded-lg"
+          [style.backgroundColor]="'var(--primary-color)'"
+          style="color: white"
           (click)="toggleSidebar()"
           aria-label="Abrir menú lateral"
         >

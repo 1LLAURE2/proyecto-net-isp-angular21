@@ -16,8 +16,9 @@ export class ListClientes {
 
   clientes: any[] = [];
 
+  isDarkMode: boolean = false;
   ngOnInit() {
-    console.log("ngOnInit clientes");
+    this.isDarkMode = document.documentElement.classList.contains('dark');
     this.getClientes.execute()
       .subscribe(data => this.clientes = data);
   }
@@ -30,25 +31,61 @@ export class ListClientes {
   itemsPerPage = 5
 
   clients = [
-    {
-      name: 'Juan Pérez',
-      email: 'juan@email.com',
-      plan: 'premium',
-      status: 'activo'
-    },
-    {
-      name: 'Ana Torres',
-      email: 'ana@email.com',
-      plan: 'basico',
-      status: 'pendiente'
-    },
-    {
-      name: 'Carlos López',
-      email: 'carlos@email.com',
-      plan: 'estandar',
-      status: 'inactivo'
-    }
-  ]
+    { name:'Juan Pérez', email:'juan@email.com', plan:'premium', status:'activo' },
+    { name:'Ana Torres', email:'ana@email.com', plan:'basico', status:'pendiente' },
+    { name:'Carlos López', email:'carlos@email.com', plan:'estandar', status:'inactivo' },
+    { name:'Luis Martínez', email:'luis@email.com', plan:'premium', status:'activo' },
+    { name:'María Gómez', email:'maria@email.com', plan:'basico', status:'activo' },
+    { name:'Pedro Sánchez', email:'pedro@email.com', plan:'estandar', status:'pendiente' },
+    { name:'Laura Díaz', email:'laura@email.com', plan:'premium', status:'activo' },
+    { name:'Jorge Castillo', email:'jorge@email.com', plan:'basico', status:'inactivo' },
+    { name:'Sofía Herrera', email:'sofia@email.com', plan:'estandar', status:'activo' },
+    { name:'Miguel Navarro', email:'miguel@email.com', plan:'premium', status:'activo' },
+
+    { name:'Daniel Rojas', email:'daniel@email.com', plan:'basico', status:'pendiente' },
+    { name:'Paula Medina', email:'paula@email.com', plan:'estandar', status:'activo' },
+    { name:'Ricardo Vega', email:'ricardo@email.com', plan:'premium', status:'inactivo' },
+    { name:'Valeria Campos', email:'valeria@email.com', plan:'basico', status:'activo' },
+    { name:'Hugo Flores', email:'hugo@email.com', plan:'estandar', status:'activo' },
+    { name:'Natalia Romero', email:'natalia@email.com', plan:'premium', status:'pendiente' },
+    { name:'Diego Salazar', email:'diego@email.com', plan:'basico', status:'activo' },
+    { name:'Camila Ortega', email:'camila@email.com', plan:'estandar', status:'inactivo' },
+    { name:'Fernando Cruz', email:'fernando@email.com', plan:'premium', status:'activo' },
+    { name:'Gabriela Soto', email:'gabriela@email.com', plan:'basico', status:'activo' },
+
+    { name:'Andrés Vargas', email:'andres@email.com', plan:'estandar', status:'pendiente' },
+    { name:'Patricia Núñez', email:'patricia@email.com', plan:'premium', status:'activo' },
+    { name:'Alejandro Pineda', email:'alejandro@email.com', plan:'basico', status:'inactivo' },
+    { name:'Daniela Molina', email:'daniela@email.com', plan:'estandar', status:'activo' },
+    { name:'Roberto Cabrera', email:'roberto@email.com', plan:'premium', status:'activo' },
+    { name:'Lucía Bravo', email:'lucia@email.com', plan:'basico', status:'pendiente' },
+    { name:'Esteban Fuentes', email:'esteban@email.com', plan:'estandar', status:'activo' },
+    { name:'Verónica León', email:'veronica@email.com', plan:'premium', status:'activo' },
+    { name:'Iván Carrasco', email:'ivan@email.com', plan:'basico', status:'inactivo' },
+    { name:'Rosa Delgado', email:'rosa@email.com', plan:'estandar', status:'activo' },
+
+    { name:'Tomás Mendoza', email:'tomas@email.com', plan:'premium', status:'activo' },
+    { name:'Claudia Peña', email:'claudia@email.com', plan:'basico', status:'activo' },
+    { name:'Manuel Aguilar', email:'manuel@email.com', plan:'estandar', status:'pendiente' },
+    { name:'Elena Serrano', email:'elena@email.com', plan:'premium', status:'activo' },
+    { name:'Oscar Zamora', email:'oscar@email.com', plan:'basico', status:'inactivo' },
+    { name:'Adriana Cortés', email:'adriana@email.com', plan:'estandar', status:'activo' },
+    { name:'Raúl Espinoza', email:'raul@email.com', plan:'premium', status:'activo' },
+    { name:'Patricio Valdez', email:'patricio@email.com', plan:'basico', status:'pendiente' },
+    { name:'Beatriz Lara', email:'beatriz@email.com', plan:'estandar', status:'activo' },
+    { name:'Guillermo Silva', email:'guillermo@email.com', plan:'premium', status:'activo' },
+
+    { name:'Carolina Ibáñez', email:'carolina@email.com', plan:'basico', status:'activo' },
+    { name:'Sebastián Pardo', email:'sebastian@email.com', plan:'estandar', status:'inactivo' },
+    { name:'Mónica Figueroa', email:'monica@email.com', plan:'premium', status:'activo' },
+    { name:'Eduardo Solís', email:'eduardo@email.com', plan:'basico', status:'activo' },
+    { name:'Julieta Acosta', email:'julieta@email.com', plan:'estandar', status:'pendiente' },
+    { name:'Cristian Araya', email:'cristian@email.com', plan:'premium', status:'activo' },
+    { name:'Teresa Villalba', email:'teresa@email.com', plan:'basico', status:'activo' },
+    { name:'Pablo Santamaría', email:'pablo@email.com', plan:'estandar', status:'activo' },
+    { name:'Lorena Cordero', email:'lorena@email.com', plan:'premium', status:'pendiente' },
+    { name:'Mario Bustos', email:'mario@email.com', plan:'basico', status:'activo' }
+  ];
 
   filteredClients() {
 
