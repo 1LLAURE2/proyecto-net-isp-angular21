@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   standalone: true,
   selector: 'app-list-clientes',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './list-clientes.html',
   styleUrl: './list-clientes.css',
 })
@@ -25,6 +25,9 @@ export class ListClientes {
   searchTerm = ''
   statusFilter = ''
   planFilter = ''
+
+  currentPage = 1
+  itemsPerPage = 5
 
   clients = [
     {
@@ -68,12 +71,31 @@ export class ListClientes {
   }
 
   resetFilters() {
-  this.searchTerm = ''
-  this.statusFilter = ''
-  this.planFilter = ''
-}
+    this.searchTerm = ''
+    this.statusFilter = ''
+    this.planFilter = ''
+  }
 
-addClient() {
-  console.log('Abrir formulario de nuevo cliente')
-}
+  addClient() {
+    console.log('Abrir formulario de nuevo cliente')
+  }
+
+  paginatedClients() {
+
+    const start = (this.currentPage - 1) * this.itemsPerPage
+    const end = start + this.itemsPerPage
+
+    return this.filteredClients().slice(start, end)
+
+  }
+
+  totalPages() {
+    return Math.ceil(this.filteredClients().length / this.itemsPerPage)
+  }
+
+  changePage(page: number) {
+    if (page < 1 || page > this.totalPages()) return
+    this.currentPage = page
+  }
+
 }
