@@ -1,6 +1,158 @@
   <h1>Clientes</h1>
-    <ul>
+    <!-- <ul>
       <li *ngFor="let cliente of clientes">
         {{ cliente.nombre }} - {{ cliente.email }}
       </li>
-    </ul>
+    </ul> -->
+
+    <!--  -->
+    <div class="min-h-screen p-4 md:p-6"
+     [ngStyle]="{'background-color':'var(--bg-color)', 'color':'var(--text-color)'}">
+
+  <!-- HEADER -->
+  <div class="mb-6">
+    <h1 class="text-2xl md:text-3xl font-bold">Administración de Clientes</h1>
+    <p class="text-sm opacity-70">Gestiona tus clientes y sus planes</p>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="rounded-xl shadow-sm p-4 mb-6 flex flex-col md:flex-row gap-4"
+       [ngStyle]="{'background-color':'var(--card-bg)'}">
+
+    <!-- BUSCADOR -->
+    <div class="flex-1">
+      <input
+        type="text"
+        placeholder="Buscar cliente..."
+        class="w-full px-4 py-2 rounded-lg border focus:outline-none focus:ring-2"
+        [ngStyle]="{'border-color':'var(--primary-color)'}"
+        [(ngModel)]="searchTerm"
+      />
+    </div>
+
+    <!-- FILTRO ESTADO -->
+    <div class="w-full md:w-48">
+      <select
+        [(ngModel)]="statusFilter"
+        class="w-full px-4 py-2 rounded-lg border"
+        [ngStyle]="{'border-color':'var(--primary-color)'}">
+
+        <option value="">Estado</option>
+        <option value="activo">Activo</option>
+        <option value="pendiente">Pendiente</option>
+        <option value="inactivo">Inactivo</option>
+
+      </select>
+    </div>
+
+    <!-- FILTRO PLAN -->
+    <div class="w-full md:w-48">
+      <select
+        [(ngModel)]="planFilter"
+        class="w-full px-4 py-2 rounded-lg border"
+        [ngStyle]="{'border-color':'var(--primary-color)'}">
+
+        <option value="">Plan</option>
+        <option value="premium">Premium</option>
+        <option value="basico">Básico</option>
+        <option value="estandar">Estándar</option>
+
+      </select>
+    </div>
+
+  </div>
+
+  <!-- TABLA -->
+  <div class="rounded-xl shadow-sm overflow-hidden"
+       [ngStyle]="{'background-color':'var(--card-bg)'}">
+
+    <div class="overflow-x-auto">
+
+      <table class="min-w-full text-sm">
+
+        <thead
+          class="text-left border-b"
+          [ngStyle]="{'border-color':'var(--primary-color)'}">
+
+          <tr class="text-xs uppercase tracking-wide">
+            <th class="px-6 py-3">Cliente</th>
+            <th class="px-6 py-3">Email</th>
+            <th class="px-6 py-3">Plan</th>
+            <th class="px-6 py-3">Estado</th>
+            <th class="px-6 py-3">Acciones</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let client of filteredClients()"
+              class="border-b hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+
+            <td class="px-6 py-4 font-medium">
+              {{client.name}}
+            </td>
+
+            <td class="px-6 py-4">
+              {{client.email}}
+            </td>
+
+            <td class="px-6 py-4">
+
+              <span
+                class="px-3 py-1 rounded-full text-xs font-semibold"
+                [ngClass]="{
+                  'bg-blue-100 text-blue-600': client.plan==='premium',
+                  'bg-green-100 text-green-600': client.plan==='basico',
+                  'bg-yellow-100 text-yellow-600': client.plan==='estandar'
+                }">
+
+                {{client.plan}}
+
+              </span>
+
+            </td>
+
+            <td class="px-6 py-4">
+
+              <span
+                class="px-3 py-1 rounded-full text-xs font-semibold"
+                [ngClass]="{
+                  'bg-green-100 text-green-700': client.status==='activo',
+                  'bg-yellow-100 text-yellow-700': client.status==='pendiente',
+                  'bg-red-100 text-red-700': client.status==='inactivo'
+                }">
+
+                {{client.status}}
+
+              </span>
+
+            </td>
+
+            <td class="px-6 py-4 flex gap-2">
+
+              <button
+                class="px-3 py-1 text-white rounded-md text-xs"
+                [ngStyle]="{'background-color':'var(--primary-color)'}">
+                Editar
+              </button>
+
+              <button
+                class="px-3 py-1 text-white rounded-md text-xs"
+                [ngStyle]="{'background-color':'var(--accent-color)'}">
+                Eliminar
+              </button>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
