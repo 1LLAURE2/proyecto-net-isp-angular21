@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ClienteRepository } from '../domain/cliente-repository';
-import { ClienteApiService } from './cliente-api.service';
-import { Observable } from 'rxjs';
-import { ClienteModel } from '../domain/cliente.model';
+import { ClienteRepository } from '../../domain/cliente-repository';
+import { ClienteApiService } from '../api/cliente-api.service';
+import { map, Observable } from 'rxjs';
+import { ClienteModel } from '../../domain/cliente.model';
+import { ClienteMapper } from '../mappers/cliente.mapper';
+import { isApiSuccess } from '../../../../shared/models/api-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +14,20 @@ export class ClienteRepositoryImpl implements ClienteRepository {
   constructor(private api: ClienteApiService){}
 
   getAll(): Observable<ClienteModel[]> {
-    return this.api.getAll();
+    return this.api.getAll().pipe(
+      map(response => {
+
+        // ✅ Manejo correcto de error
+        if (!isApiSuccess(response)) {
+          throw new Error(response.message);
+        }
+
+        // ✅ Aquí ya NO es null
+        return response.data.map(cliente =>
+          ClienteMapper.fromApi(cliente)
+        );
+      })
+    );
     // throw new Error('Method not implemented.');
   }
   getById(id: string): Observable<ClienteModel> {

@@ -2,7 +2,7 @@ import { Routes } from "@angular/router";
 import { GetClientesUseCase } from "./application/get-clientes.usecase";
 import { CreateClienteUseCase } from "./application/create-cliente.usecase";
 import { UpdateClienteUseCase } from "./application/update-cliente.usecase";
-import { ClienteRepositoryImpl } from "./infrastructure/cliente-repository-impl";
+import { ClienteRepositoryImpl } from "./infrastructure/repositories/cliente-repository-impl";
 
 export const CLIENTES_ROUTES: Routes = [
   {

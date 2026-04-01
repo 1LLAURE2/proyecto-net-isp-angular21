@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { ClienteRepositoryImpl } from '../infrastructure/cliente-repository-impl';
+import { ClienteRepositoryImpl } from '../infrastructure/repositories/cliente-repository-impl';
 import { ClienteModel } from '../domain/cliente.model';
 
 @Injectable({
