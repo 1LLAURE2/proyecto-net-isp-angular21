@@ -21,7 +21,9 @@
     </button> -->
     <app-custom-button
       label="Nuevo Cliente"
-      type="secondary"
+      variant="solid"
+      color="secondary"
+      size="md"
       (onClick)="addClient()">
 
       <span icon>➕</span>
@@ -64,7 +66,9 @@
     </button> -->
     <app-custom-button
       label="Restablecer"
-      type="outline-accent"
+      variant="outline"
+      color="accent"
+      size="md"
       [fullWidth]="true"
       (onClick)="resetFilters()">
     </app-custom-button>
@@ -112,19 +116,28 @@
 
       <div class="flex gap-2">
 
-        <button class="flex-1 px-3 py-2 text-white rounded-md text-sm"
+        <!-- <button class="flex-1 px-3 py-2 text-white rounded-md text-sm"
           [ngStyle]="{'background-color':'var(--primary-color)'}">
-
           Editar
+        </button> -->
+        <app-custom-button
+          label="Editar"
+          color="primary"
+          size="sm"
+          [disabled]="true"
+          [fullWidth]="true">
+        </app-custom-button>
 
-        </button>
-
-        <button class="flex-1 px-3 py-2 text-white rounded-md text-sm"
+        <!-- <button class="flex-1 px-3 py-2 text-white rounded-md text-sm"
           [ngStyle]="{'background-color':'var(--accent-color)'}">
-
           Eliminar
-
-        </button>
+        </button> -->
+        <app-custom-button
+          label="Eliminar"
+          color="accent"
+          size="sm"
+          [fullWidth]="true">
+        </app-custom-button>
 
       </div>
 
@@ -183,19 +196,28 @@
 
             <td class="px-6 py-4 flex gap-2">
 
-              <button class="px-3 py-1 text-white rounded-md text-xs"
+              <!-- <button class="px-3 py-1 text-white rounded-md text-xs"
                 [ngStyle]="{'background-color':'var(--primary-color)'}">
-
                 Editar
+              </button> -->
+              <app-custom-button
+                label="Editar"
+                color="primary"
+                size="sm"
+                [disabled]="true"
+                [fullWidth]="true">
+              </app-custom-button>
 
-              </button>
-
-              <button class="px-3 py-1 text-white rounded-md text-xs"
+              <!-- <button class="px-3 py-1 text-white rounded-md text-xs"
                 [ngStyle]="{'background-color':'var(--accent-color)'}">
-
                 Eliminar
-
-              </button>
+              </button> -->
+              <app-custom-button
+                label="Eliminar"
+                color="accent"
+                size="sm"
+                [fullWidth]="true">
+              </app-custom-button>
 
             </td>
 
