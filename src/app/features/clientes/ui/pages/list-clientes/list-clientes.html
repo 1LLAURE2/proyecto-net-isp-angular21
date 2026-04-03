@@ -187,11 +187,44 @@
             </td>
 
             <td class="px-6 py-4">
-              {{client.plan}}
+              <!-- <span
+                class="text-xs px-2 py-1 rounded text-white"
+                [ngStyle]="{'background-color':'var(--primary-color)'}">
+                  {{client.plan}}
+              </span> -->
+
+              <!-- <span
+                class="px-3 py-1 rounded-full text-xs font-semibold"
+                [ngClass]="{
+                  'bg-blue-100 text-blue-600': client.plan==='premium',
+                  'bg-green-100 text-green-600': client.plan==='basico',
+                  'bg-yellow-100 text-yellow-600': client.plan==='estandar'
+                }">
+
+                {{client.plan}}
+
+              </span> -->
+              <app-custom-badge
+                [value]="client.plan"
+                type="plan">
+              </app-custom-badge>
             </td>
 
             <td class="px-6 py-4">
-              {{client.status}}
+              <!-- {{client.status}} -->
+               <!-- <span
+                class="px-3 py-1 rounded-full text-xs font-semibold"
+                [ngClass]="{
+                  'bg-green-100 text-green-700': client.status==='activo',
+                  'bg-yellow-100 text-yellow-700': client.status==='pendiente',
+                  'bg-red-100 text-red-700': client.status==='inactivo'
+                }">
+                {{client.status}}
+              </span> -->
+              <app-custom-badge
+                [value]="client.status"
+                type="status">
+              </app-custom-badge>
             </td>
 
             <td class="px-6 py-4 flex gap-2">

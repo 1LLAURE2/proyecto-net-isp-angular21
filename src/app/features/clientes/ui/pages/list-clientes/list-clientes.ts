@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { CustomPaginacion } from '../../../../../shared/components/custom-paginacion/custom-paginacion';
 import { CustomButton } from '../../../../../shared/components/custom-button/custom-button';
 import { CustomSeleccionItemsPorPagina } from '../../../../../shared/components/custom-seleccion-items-por-pagina/custom-seleccion-items-por-pagina';
+import { CustomBadge } from '../../../../../shared/components/custom-badge/custom-badge';
 
 @Component({
   standalone: true,
   selector: 'app-list-clientes',
-  imports: [CommonModule, FormsModule,CustomPaginacion,CustomButton,CustomSeleccionItemsPorPagina],
+  imports: [CommonModule, FormsModule,CustomPaginacion,CustomButton,CustomSeleccionItemsPorPagina,CustomBadge],
   templateUrl: './list-clientes.html',
   styleUrl: './list-clientes.css',
 })
