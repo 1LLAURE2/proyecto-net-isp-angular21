@@ -5,4 +5,5 @@ export interface ClienteModel {
   telefono: string;
   direccion: string;
   activo: boolean;
+  plan: string;
 }

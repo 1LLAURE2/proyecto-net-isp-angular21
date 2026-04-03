@@ -1,0 +1,13 @@
+<button
+  [ngClass]="getClasses()"
+  [ngStyle]="getStyles()"
+  [disabled]="disabled"
+  (click)="handleClick()">
+
+  <!-- ICONO -->
+  <ng-content select="[icon]"></ng-content>
+
+  <!-- TEXTO -->
+  {{ label }}
+
+</button>

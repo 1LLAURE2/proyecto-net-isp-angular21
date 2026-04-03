@@ -1,0 +1,35 @@
+<div class="flex flex-wrap justify-center gap-2 mt-4">
+
+  <!-- ANTERIOR -->
+  <button
+    class="px-3 py-1 rounded border"
+    (click)="changePage(currentPage - 1)"
+    [disabled]="currentPage === 1">
+    Anterior
+  </button>
+
+  <!-- PAGINAS -->
+  @for (page of getVisiblePages(); track page) {
+
+    <!-- NUMERO -->
+    @if(page !== '...'){
+      <button
+        class="px-3 py-1 rounded border"
+        [class.font-bold]="currentPage === page"
+        (click)="changePage(page)">
+        {{ page }}
+      </button>
+    } @else {
+      <span class="px-2 py-1 text-gray-500">...</span>
+    }
+  }
+
+  <!-- SIGUIENTE -->
+  <button
+    class="px-3 py-1 rounded border"
+    (click)="changePage(currentPage + 1)"
+    [disabled]="currentPage === totalPages">
+    Siguiente
+  </button>
+
+</div>

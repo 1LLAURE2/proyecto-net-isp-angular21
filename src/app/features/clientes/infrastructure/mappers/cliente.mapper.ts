@@ -13,6 +13,7 @@ export class ClienteMapper {
       telefono: cliente.phone,
       direccion: cliente.address,
       activo: cliente.status === 'activo',
+      plan: cliente.plan?.name ?? '',
     };
   }
 

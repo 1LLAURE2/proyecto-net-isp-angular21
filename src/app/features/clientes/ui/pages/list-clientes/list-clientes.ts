@@ -2,11 +2,14 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { GetClientesUseCase } from '../../../application/get-clientes.usecase';
 import { FormsModule } from '@angular/forms';
+import { CustomPaginacion } from '../../../../../shared/components/custom-paginacion/custom-paginacion';
+import { CustomButton } from '../../../../../shared/components/custom-button/custom-button';
+import { CustomSeleccionItemsPorPagina } from '../../../../../shared/components/custom-seleccion-items-por-pagina/custom-seleccion-items-por-pagina';
 
 @Component({
   standalone: true,
   selector: 'app-list-clientes',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,CustomPaginacion,CustomButton,CustomSeleccionItemsPorPagina],
   templateUrl: './list-clientes.html',
   styleUrl: './list-clientes.css',
 })
@@ -138,41 +141,6 @@ export class ListClientes {
     const pageNumber = Number(page);
     if (pageNumber < 1 || pageNumber > this.totalPages()) return;
     this.currentPage = pageNumber;
-  }
-
-
-  getVisiblePages(): (number | string)[] {
-
-    const total = this.totalPages();
-    const current = this.currentPage;
-
-    const pages: (number | string)[] = [];
-
-    if (total <= 7) {
-      for (let i = 1; i <= total; i++) pages.push(i);
-      return pages;
-    }
-
-    pages.push(1);
-
-    if (current > 4) {
-      pages.push('...');
-    }
-
-    const start = Math.max(2, current - 1);
-    const end = Math.min(total - 1, current + 1);
-
-    for (let i = start; i <= end; i++) {
-      pages.push(i);
-    }
-
-    if (current < total - 3) {
-      pages.push('...');
-    }
-
-    pages.push(total);
-
-    return pages;
   }
 
   onPageSizeChange(newSize: number) {

@@ -1,5 +1,4 @@
-<div class="min-h-screen p-4 md:p-6"
-[ngStyle]="{'background-color':'var(--bg-color)', 'color':'var(--text-color)'}">
+<div class="min-h-screen p-4 md:p-6" [ngStyle]="{'background-color':'var(--bg-color)', 'color':'var(--text-color)'}">
 
   <!-- HEADER -->
   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
@@ -14,33 +13,32 @@
       </p>
     </div>
 
-    <button
-      class="w-full sm:w-auto px-4 py-2 rounded-lg text-white font-medium flex items-center justify-center gap-2"
-      [ngStyle]="{'background-color':'var(--secondary-color)'}"
-      (click)="addClient()">
+    <!-- <button class="w-full sm:w-auto px-4 py-2 rounded-lg text-white font-medium flex items-center justify-center gap-2"
+      [ngStyle]="{'background-color':'var(--secondary-color)'}" (click)="addClient()">
 
       ➕ Nuevo Cliente
 
-    </button>
+    </button> -->
+    <app-custom-button
+      label="Nuevo Cliente"
+      type="secondary"
+      (onClick)="addClient()">
+
+      <span icon>➕</span>
+
+    </app-custom-button>
 
   </div>
 
 
   <!-- FILTROS -->
-  <div
-  class="rounded-xl shadow-sm p-4 mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
-  [ngStyle]="{'background-color':'var(--card-bg)'}">
+  <div class="rounded-xl shadow-sm p-4 mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+    [ngStyle]="{'background-color':'var(--card-bg)'}">
 
-    <input
-      type="text"
-      placeholder="Buscar cliente..."
-      class="w-full px-4 py-2 rounded-lg border focus:outline-none"
-      [ngStyle]="{'border-color':'var(--primary-color)'}"
-      [(ngModel)]="searchTerm"/>
+    <input type="text" placeholder="Buscar cliente..." class="w-full px-4 py-2 rounded-lg border focus:outline-none"
+      [ngStyle]="{'border-color':'var(--primary-color)'}" [(ngModel)]="searchTerm" />
 
-    <select
-      [(ngModel)]="statusFilter"
-      class="w-full px-4 py-2 rounded-lg border"
+    <select [(ngModel)]="statusFilter" class="w-full px-4 py-2 rounded-lg border"
       [ngStyle]="{'border-color':'var(--primary-color)'}">
 
       <option value="">Estado</option>
@@ -50,9 +48,7 @@
 
     </select>
 
-    <select
-      [(ngModel)]="planFilter"
-      class="w-full px-4 py-2 rounded-lg border"
+    <select [(ngModel)]="planFilter" class="w-full px-4 py-2 rounded-lg border"
       [ngStyle]="{'border-color':'var(--primary-color)'}">
 
       <option value="">Plan</option>
@@ -62,45 +58,31 @@
 
     </select>
 
-    <button
-      class="w-full px-4 py-2 rounded-lg border font-medium"
-      (click)="resetFilters()"
+    <!-- <button class="w-full px-4 py-2 rounded-lg border font-medium" (click)="resetFilters()"
       [ngStyle]="{'border-color':'var(--accent-color)','color':'var(--accent-color)'}">
-
       Restablecer
-
-    </button>
+    </button> -->
+    <app-custom-button
+      label="Restablecer"
+      type="outline-accent"
+      [fullWidth]="true"
+      (onClick)="resetFilters()">
+    </app-custom-button>
 
   </div>
 
-  <div class="flex items-center justify-end mb-4 gap-2">
-
-  <label class="text-sm opacity-70" for="pageSizeSelect">Mostrar:</label>
-
-  <select
-    id="pageSizeSelect"
-    [(ngModel)]="itemsPerPage"
-    (change)="onPageSizeChange(itemsPerPage)"
-    class="px-3 py-1 rounded border"
-    [ngStyle]="{'border-color':'var(--primary-color)'}">
-
-    <option *ngFor="let size of pageSizeOptions" [value]="size">
-      {{ size }}
-    </option>
-
-  </select>
-
-  <span class="text-sm opacity-70">registros por página</span>
-
-</div>
+  <div class="flex justify-end mb-4">
+    <app-custom-seleccion-items-por-pagina
+      [options]="pageSizeOptions"
+      [value]="itemsPerPage"
+      (valueChange)="onPageSizeChange($event)">
+    </app-custom-seleccion-items-por-pagina>
+  </div>
 
   <!-- CLIENTES MOBILE (CARDS) -->
   <div class="md:hidden space-y-4">
 
-    <div
-    *ngFor="let client of paginatedClients()"
-    class="p-4 rounded-xl shadow border"
-    [ngStyle]="{
+    <div *ngFor="let client of paginatedClients()" class="p-4 rounded-xl shadow border" [ngStyle]="{
       'background-color':'var(--card-bg)',
       'border-color':'var(--primary-color)'
     }">
@@ -111,9 +93,7 @@
           {{client.name}}
         </h3>
 
-        <span
-        class="text-xs px-2 py-1 rounded text-white"
-        [ngStyle]="{'background-color':'var(--primary-color)'}">
+        <span class="text-xs px-2 py-1 rounded text-white" [ngStyle]="{'background-color':'var(--primary-color)'}">
 
           {{client.plan}}
 
@@ -132,17 +112,15 @@
 
       <div class="flex gap-2">
 
-        <button
-        class="flex-1 px-3 py-2 text-white rounded-md text-sm"
-        [ngStyle]="{'background-color':'var(--primary-color)'}">
+        <button class="flex-1 px-3 py-2 text-white rounded-md text-sm"
+          [ngStyle]="{'background-color':'var(--primary-color)'}">
 
           Editar
 
         </button>
 
-        <button
-        class="flex-1 px-3 py-2 text-white rounded-md text-sm"
-        [ngStyle]="{'background-color':'var(--accent-color)'}">
+        <button class="flex-1 px-3 py-2 text-white rounded-md text-sm"
+          [ngStyle]="{'background-color':'var(--accent-color)'}">
 
           Eliminar
 
@@ -153,55 +131,22 @@
     </div>
 
     <!-- PAGINACION MÓVIL -->
-<div class="flex justify-center gap-2 mt-4 md:hidden">
-
-  <button
-    class="px-3 py-1 rounded border"
-    (click)="changePage(currentPage - 1)"
-    [disabled]="currentPage === 1">
-    Anterior
-  </button>
-
-  <ng-container *ngFor="let page of getVisiblePages()">
-
-    <button
-      *ngIf="page !== '...'"
-      class="px-3 py-1 rounded border"
-      [class.font-bold]="currentPage === page"
-      (click)="changePage(page)">
-      {{ page }}
-    </button>
-
-    <span
-      *ngIf="page === '...'"
-      class="px-2 py-1 text-gray-500">
-      ...
-    </span>
-
-  </ng-container>
-
-  <button
-    class="px-3 py-1 rounded border"
-    (click)="changePage(currentPage + 1)"
-    [disabled]="currentPage === totalPages()">
-    Siguiente
-  </button>
-
-</div>
+    <app-custom-paginacion
+      [currentPage]="currentPage"
+      [totalPages]="totalPages()"
+      (pageChange)="changePage($event)">
+    </app-custom-paginacion>
   </div>
 
 
   <!-- TABLA DESKTOP -->
-  <div class="hidden md:block rounded-xl shadow-sm overflow-hidden"
-  [ngStyle]="{'background-color':'var(--card-bg)'}">
+  <div class="hidden md:block rounded-xl shadow-sm overflow-hidden" [ngStyle]="{'background-color':'var(--card-bg)'}">
 
     <div class="overflow-x-auto">
 
       <table class="min-w-[700px] w-full text-sm">
 
-        <thead
-        class="text-left border-b"
-        [ngStyle]="{'border-color':'var(--primary-color)'}">
+        <thead class="text-left border-b" [ngStyle]="{'border-color':'var(--primary-color)'}">
 
           <tr class="text-xs uppercase tracking-wide">
             <th class="px-6 py-3">Cliente</th>
@@ -215,15 +160,10 @@
 
         <tbody>
 
-          <tr
-          *ngFor="let client of paginatedClients()"
-          class="border-b transition"
-          [ngStyle]="{
+          <tr *ngFor="let client of paginatedClients()" class="border-b transition" [ngStyle]="{
             'border-color':'var(--primary-color)',
             'background-color':'var(--card-bg)'
-          }"
-          [class.hover:bg-gray-100]="!isDarkMode"
-          [class.hover:bg-gray-800]="isDarkMode">
+          }" [class.hover:bg-gray-100]="!isDarkMode" [class.hover:bg-gray-800]="isDarkMode">
 
             <td class="px-6 py-4 font-medium">
               {{client.name}}
@@ -243,17 +183,15 @@
 
             <td class="px-6 py-4 flex gap-2">
 
-              <button
-              class="px-3 py-1 text-white rounded-md text-xs"
-              [ngStyle]="{'background-color':'var(--primary-color)'}">
+              <button class="px-3 py-1 text-white rounded-md text-xs"
+                [ngStyle]="{'background-color':'var(--primary-color)'}">
 
                 Editar
 
               </button>
 
-              <button
-              class="px-3 py-1 text-white rounded-md text-xs"
-              [ngStyle]="{'background-color':'var(--accent-color)'}">
+              <button class="px-3 py-1 text-white rounded-md text-xs"
+                [ngStyle]="{'background-color':'var(--accent-color)'}">
 
                 Eliminar
 
@@ -271,54 +209,11 @@
 
 
     <!-- PAGINACION -->
-    <div class="flex flex-wrap gap-2 justify-center">
-
-  <!-- ANTERIOR -->
-  <button
-  class="px-3 py-1 rounded border"
-  (click)="changePage(currentPage - 1)"
-  [disabled]="currentPage === 1">
-
-    Anterior
-
-  </button>
-
-  <!-- PAGINAS -->
-  <ng-container *ngFor="let page of getVisiblePages()">
-
-    <!-- NUMERO -->
-    <button
-    *ngIf="page !== '...'"
-    class="px-3 py-1 rounded border"
-    [class.font-bold]="currentPage === page"
-    (click)="changePage(page)">
-
-    {{ page }}
-
-  </button>
-
-    <!-- PUNTOS -->
-    <span
-    *ngIf="page === '...'"
-    class="px-2 py-1 text-gray-500">
-
-      ...
-
-    </span>
-
-  </ng-container>
-
-  <!-- SIGUIENTE -->
-  <button
-  class="px-3 py-1 rounded border"
-  (click)="changePage(currentPage + 1)"
-  [disabled]="currentPage === totalPages()">
-
-    Siguiente
-
-  </button>
-
-</div>
+    <app-custom-paginacion
+      [currentPage]="currentPage"
+      [totalPages]="totalPages()"
+      (pageChange)="changePage($event)">
+    </app-custom-paginacion>
 
   </div>
 
