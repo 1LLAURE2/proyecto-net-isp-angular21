@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { GetClientesUseCase } from '../../../application/get-clientes.usecase';
 import { FormsModule } from '@angular/forms';
 import { CustomPaginacion } from '../../../../../shared/components/custom-paginacion/custom-paginacion';
@@ -14,6 +14,7 @@ import { CustomSelect } from '../../../../../shared/components/custom-select/cus
 import { forkJoin } from 'rxjs';
 import { ClientesMobile } from "../../components/clientes-mobile/clientes-mobile";
 import { ClientesDesktop } from "../../components/clientes-desktop/clientes-desktop";
+import { ClienteModel } from '../../../domain/cliente.model';
 // import { SelectOption } from '../../../../../shared/models/SelectOption';
 // import { GetPlansSelectUseCase } from '../../../../planes/application/use-cases/get-plans-select.usecase';
 // import { CustomSelect } from '../../../../../shared/components/custom-select/custom-select';
@@ -32,26 +33,32 @@ import { ClientesDesktop } from "../../components/clientes-desktop/clientes-desk
 })
 export class ListClientes {
 
+  private cdr = inject(ChangeDetectorRef);
   private getClientes = inject(GetClientesUseCase);
   private getPlansSelect = inject(GetPlansSelectUseCase);
 
   planes: SelectOption[] = [];
+
+
+  clientes: ClienteModel[] = [];
+  paginatedClientsList: ClienteModel[] = [];
+  filteredClientsList: ClienteModel[] = [];
+
+
+  searchTerm = ''
+  statusFilter = ''
   planFilter: number | string | null = null;
 
-  clientes: any[] = [];
+  currentPage = 1
+  itemsPerPage = 5
+  totalPagesCount: number = 1;
+  pageSizeOptions = [5, 10, 50];   // opciones del select
 
   isDarkMode: boolean = false;
+
   ngOnInit() {
     this.isDarkMode = document.documentElement.classList.contains('dark');
 
-    // this.getClientes.execute()
-    //   .subscribe(data => this.clientes = data);
-
-    //   // TODO: 🔥 AQUI SE CARGAN LOS PLANES
-    // this.getPlansSelect.execute()
-    //   .subscribe(data => this.planes = data);
-
-    //   console.log(this.planes);
     forkJoin([
       this.getClientes.execute(),
       this.getPlansSelect.execute()
@@ -59,89 +66,34 @@ export class ListClientes {
       this.clientes = clientesData;
       this.planes = planesData;
 
+      this.updateClients();
+      this.cdr.detectChanges();
+
       console.log('Planes:', this.planes);
       console.log('Clientes:', this.clientes);
     });
   }
 
-  searchTerm = ''
-  statusFilter = ''
-  // planFilter = ''
 
-  currentPage = 1
-  pageSizeOptions = [5, 10, 50];   // opciones del select
-  itemsPerPage = 5
+  filteredClients(): ClienteModel[] {
 
-  clients = [
-    { name:'Juan Pérez', email:'juan@email.com', plan:'premium', status:'activo' },
-    { name:'Ana Torres', email:'ana@email.com', plan:'basico', status:'pendiente' },
-    { name:'Carlos López', email:'carlos@email.com', plan:'estandar', status:'inactivo' },
-    { name:'Luis Martínez', email:'luis@email.com', plan:'premium', status:'activo' },
-    { name:'María Gómez', email:'maria@email.com', plan:'basico', status:'activo' },
-    { name:'Pedro Sánchez', email:'pedro@email.com', plan:'estandar', status:'pendiente' },
-    { name:'Laura Díaz', email:'laura@email.com', plan:'premium', status:'activo' },
-    { name:'Jorge Castillo', email:'jorge@email.com', plan:'basico', status:'inactivo' },
-    { name:'Sofía Herrera', email:'sofia@email.com', plan:'estandar', status:'activo' },
-    { name:'Miguel Navarro', email:'miguel@email.com', plan:'premium', status:'activo' },
-
-    { name:'Daniel Rojas', email:'daniel@email.com', plan:'basico', status:'pendiente' },
-    { name:'Paula Medina', email:'paula@email.com', plan:'estandar', status:'activo' },
-    { name:'Ricardo Vega', email:'ricardo@email.com', plan:'premium', status:'inactivo' },
-    { name:'Valeria Campos', email:'valeria@email.com', plan:'basico', status:'activo' },
-    { name:'Hugo Flores', email:'hugo@email.com', plan:'estandar', status:'activo' },
-    { name:'Natalia Romero', email:'natalia@email.com', plan:'premium', status:'pendiente' },
-    { name:'Diego Salazar', email:'diego@email.com', plan:'basico', status:'activo' },
-    { name:'Camila Ortega', email:'camila@email.com', plan:'estandar', status:'inactivo' },
-    { name:'Fernando Cruz', email:'fernando@email.com', plan:'premium', status:'activo' },
-    { name:'Gabriela Soto', email:'gabriela@email.com', plan:'basico', status:'activo' },
-
-    { name:'Andrés Vargas', email:'andres@email.com', plan:'estandar', status:'pendiente' },
-    { name:'Patricia Núñez', email:'patricia@email.com', plan:'premium', status:'activo' },
-    { name:'Alejandro Pineda', email:'alejandro@email.com', plan:'basico', status:'inactivo' },
-    { name:'Daniela Molina', email:'daniela@email.com', plan:'estandar', status:'activo' },
-    { name:'Roberto Cabrera', email:'roberto@email.com', plan:'premium', status:'activo' },
-    { name:'Lucía Bravo', email:'lucia@email.com', plan:'basico', status:'pendiente' },
-    { name:'Esteban Fuentes', email:'esteban@email.com', plan:'estandar', status:'activo' },
-    { name:'Verónica León', email:'veronica@email.com', plan:'premium', status:'activo' },
-    { name:'Iván Carrasco', email:'ivan@email.com', plan:'basico', status:'inactivo' },
-    { name:'Rosa Delgado', email:'rosa@email.com', plan:'estandar', status:'activo' },
-
-    { name:'Tomás Mendoza', email:'tomas@email.com', plan:'premium', status:'activo' },
-    { name:'Claudia Peña', email:'claudia@email.com', plan:'basico', status:'activo' },
-    { name:'Manuel Aguilar', email:'manuel@email.com', plan:'estandar', status:'pendiente' },
-    { name:'Elena Serrano', email:'elena@email.com', plan:'premium', status:'activo' },
-    { name:'Oscar Zamora', email:'oscar@email.com', plan:'basico', status:'inactivo' },
-    { name:'Adriana Cortés', email:'adriana@email.com', plan:'estandar', status:'activo' },
-    { name:'Raúl Espinoza', email:'raul@email.com', plan:'premium', status:'activo' },
-    { name:'Patricio Valdez', email:'patricio@email.com', plan:'basico', status:'pendiente' },
-    { name:'Beatriz Lara', email:'beatriz@email.com', plan:'estandar', status:'activo' },
-    { name:'Guillermo Silva', email:'guillermo@email.com', plan:'premium', status:'activo' },
-
-    { name:'Carolina Ibáñez', email:'carolina@email.com', plan:'basico', status:'activo' },
-    { name:'Sebastián Pardo', email:'sebastian@email.com', plan:'estandar', status:'inactivo' },
-    { name:'Mónica Figueroa', email:'monica@email.com', plan:'premium', status:'activo' },
-    { name:'Eduardo Solís', email:'eduardo@email.com', plan:'basico', status:'activo' },
-    { name:'Julieta Acosta', email:'julieta@email.com', plan:'estandar', status:'pendiente' },
-    { name:'Cristian Araya', email:'cristian@email.com', plan:'premium', status:'activo' },
-    { name:'Teresa Villalba', email:'teresa@email.com', plan:'basico', status:'activo' },
-    { name:'Pablo Santamaría', email:'pablo@email.com', plan:'estandar', status:'activo' },
-    { name:'Lorena Cordero', email:'lorena@email.com', plan:'premium', status:'pendiente' },
-    { name:'Mario Bustos', email:'mario@email.com', plan:'basico', status:'activo' }
-  ];
-
-  filteredClients() {
-
-    return this.clients.filter(client => {
+    return this.clientes.filter(client => {
 
       const matchesSearch =
-        client.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        client.nombre.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
         client.email.toLowerCase().includes(this.searchTerm.toLowerCase())
 
       const matchesStatus =
-        this.statusFilter ? client.status === this.statusFilter : true
+        this.statusFilter
+        ? (this.statusFilter === 'activo' && client.activo) ||
+          (this.statusFilter === 'inactivo' && !client.activo)
+        : true
+
+        console.log("Client PLAN"+client.plan.toString());
+        console.log("Client PLANFILTER"+this.planFilter);
 
       const matchesPlan =
-        this.planFilter ? client.plan === this.planFilter : true
+        this.planFilter ? client.plan.toString() === this.planFilter.toString() : true
 
       return matchesSearch && matchesStatus && matchesPlan
 
@@ -149,10 +101,25 @@ export class ListClientes {
 
   }
 
+  updateClients(): void {
+    // const filtered: ClienteModel[] = this.filteredClients();
+    this.filteredClientsList = this.filteredClients();
+
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+
+    this.paginatedClientsList = this.filteredClientsList.slice(start, end);
+
+    // Actualizar el total de páginas
+    this.totalPagesCount = Math.ceil(this.filteredClientsList.length / this.itemsPerPage);
+  }
+
   resetFilters() {
-    this.searchTerm = ''
-    this.statusFilter = ''
-    this.planFilter = ''
+    this.searchTerm = '';
+    this.statusFilter = '';
+    this.planFilter = '';
+    this.currentPage=1;
+    this.updateClients();
   }
 
   addClient() {
@@ -173,17 +140,19 @@ export class ListClientes {
   }
 
   changePage(page: number | string ) {
-    // if (page < 1 || page > this.totalPages()) return
-    // this.currentPage = page
     if (page === '...') return;
+
     const pageNumber = Number(page);
     if (pageNumber < 1 || pageNumber > this.totalPages()) return;
+
     this.currentPage = pageNumber;
+    this.updateClients();
   }
 
   onPageSizeChange(newSize: number) {
     this.itemsPerPage = newSize;
     this.currentPage = 1; // resetear a la primera página al cambiar tamaño
+    this.updateClients();
   }
 
 }

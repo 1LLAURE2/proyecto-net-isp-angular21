@@ -15,11 +15,11 @@ export class CustomBadge {
 
     if (this.type === 'plan') {
       switch (this.value) {
-        case 'premium':
+        case 'Premium':
           return 'bg-blue-100 text-blue-600';
-        case 'basico':
+        case 'Básico':
           return 'bg-green-100 text-green-600';
-        case 'estandar':
+        case 'Estándar':
           return 'bg-yellow-100 text-yellow-600';
       }
     }

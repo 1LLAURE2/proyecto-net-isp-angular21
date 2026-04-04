@@ -90,20 +90,21 @@
 
   <!-- CLIENTES MOBILE (CARDS) -->
   <app-clientes-mobile
-    [clients]="paginatedClients()"
+    [clients]="paginatedClientsList"
     [currentPage]="currentPage"
-    [totalPagesCount]="totalPages()"
+    [totalPagesCount]="totalPagesCount"
     (pageChange)="changePage($event)">
   </app-clientes-mobile>
 
 
   <!-- TABLA DESKTOP -->
-  <app-clientes-desktop
-    [clients]="paginatedClients()"
-    [currentPage]="currentPage"
-    [totalPagesCount]="totalPages()"
-    [isDarkMode]="isDarkMode"
-    (pageChange)="changePage($event)">
-  </app-clientes-desktop>
-
+  <div *ngIf="clientes.length > 0 || planes.length > 0">
+    <app-clientes-desktop
+      [clients]="paginatedClientsList"
+      [currentPage]="currentPage"
+      [totalPagesCount]="totalPagesCount"
+      [isDarkMode]="isDarkMode"
+      (pageChange)="changePage($event)">
+    </app-clientes-desktop>
+  </div>
 </div>
