@@ -6,30 +6,65 @@ import { CustomPaginacion } from '../../../../../shared/components/custom-pagina
 import { CustomButton } from '../../../../../shared/components/custom-button/custom-button';
 import { CustomSeleccionItemsPorPagina } from '../../../../../shared/components/custom-seleccion-items-por-pagina/custom-seleccion-items-por-pagina';
 import { CustomBadge } from '../../../../../shared/components/custom-badge/custom-badge';
+import { GetPlansSelectUseCase } from '../../../../planes/application/use-cases/get-plans-select.usecase';
+import { SelectOption } from '../../../../../shared/models/SelectOption';
+import { PlanRepository } from '../../../../planes/dominio/repositories/plan.repository';
+import { PlanRepositoryImpl } from '../../../../planes/infraestructure/repositories/plan.repository.impl';
+import { CustomSelect } from '../../../../../shared/components/custom-select/custom-select';
+import { forkJoin } from 'rxjs';
+// import { SelectOption } from '../../../../../shared/models/SelectOption';
+// import { GetPlansSelectUseCase } from '../../../../planes/application/use-cases/get-plans-select.usecase';
+// import { CustomSelect } from '../../../../../shared/components/custom-select/custom-select';
+// import { ListPlanes } from '../../../../planes/UI/list-planes/list-planes';
 
 @Component({
   standalone: true,
   selector: 'app-list-clientes',
-  imports: [CommonModule, FormsModule,CustomPaginacion,CustomButton,CustomSeleccionItemsPorPagina,CustomBadge],
+  imports: [CommonModule, FormsModule,CustomPaginacion,CustomButton,CustomSeleccionItemsPorPagina,CustomBadge,CustomSelect],
   templateUrl: './list-clientes.html',
   styleUrl: './list-clientes.css',
+  providers: [
+    { provide: PlanRepository, useClass: PlanRepositoryImpl }, // <-- clave
+    GetPlansSelectUseCase
+  ],
 })
 export class ListClientes {
 
   private getClientes = inject(GetClientesUseCase);
+  private getPlansSelect = inject(GetPlansSelectUseCase);
+
+  planes: SelectOption[] = [];
+  planFilter: number | string | null = null;
 
   clientes: any[] = [];
 
   isDarkMode: boolean = false;
   ngOnInit() {
     this.isDarkMode = document.documentElement.classList.contains('dark');
-    this.getClientes.execute()
-      .subscribe(data => this.clientes = data);
+
+    // this.getClientes.execute()
+    //   .subscribe(data => this.clientes = data);
+
+    //   // TODO: 🔥 AQUI SE CARGAN LOS PLANES
+    // this.getPlansSelect.execute()
+    //   .subscribe(data => this.planes = data);
+
+    //   console.log(this.planes);
+    forkJoin([
+      this.getClientes.execute(),
+      this.getPlansSelect.execute()
+    ]).subscribe(([clientesData, planesData]) => {
+      this.clientes = clientesData;
+      this.planes = planesData;
+
+      console.log('Planes:', this.planes);
+      console.log('Clientes:', this.clientes);
+    });
   }
 
   searchTerm = ''
   statusFilter = ''
-  planFilter = ''
+  // planFilter = ''
 
   currentPage = 1
   pageSizeOptions = [5, 10, 50];   // opciones del select

@@ -50,15 +50,20 @@
 
     </select>
 
-    <select [(ngModel)]="planFilter" class="w-full px-4 py-2 rounded-lg border"
+<!-- TODO : SELECT DE PLANES -->
+    <!-- <select [(ngModel)]="planFilter" class="w-full px-4 py-2 rounded-lg border"
       [ngStyle]="{'border-color':'var(--primary-color)'}">
-
       <option value="">Plan</option>
       <option value="premium">Premium</option>
       <option value="basico">Básico</option>
       <option value="estandar">Estándar</option>
-
-    </select>
+    </select> -->
+    <app-custom-select
+      [options]="planes"
+      [(value)]="planFilter"
+      placeholder="Seleccione un Plan">
+    </app-custom-select>
+<!-- TODO : FIN SELECT DE PLANES -->
 
     <!-- <button class="w-full px-4 py-2 rounded-lg border font-medium" (click)="resetFilters()"
       [ngStyle]="{'border-color':'var(--accent-color)','color':'var(--accent-color)'}">

@@ -1,0 +1,16 @@
+<select
+  class="w-full px-4 py-2 rounded-lg border"
+  [ngStyle]="{'border-color':'var(--primary-color)'}"
+  [(ngModel)]="value"
+  (ngModelChange)="onChange($event)">
+
+  <!-- <option [ngValue]="null">{{ placeholder }}</option> -->
+  <option [ngValue]="null" disabled selected>{{ placeholder }}</option>
+
+  @for (opt of options; track opt.id) {
+    <option [ngValue]="opt.id">
+      {{ opt.label }}
+    </option>
+  }
+
+</select>

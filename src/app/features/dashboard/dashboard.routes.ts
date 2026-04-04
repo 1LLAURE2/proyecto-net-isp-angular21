@@ -17,7 +17,7 @@ export const DASHBOARD_ROUTES: Routes = [
         provide: DashboardRepository,
         useExisting: DashboardRepositoryImpl
       }
-  ],
+    ],
     children: [
       // {
       //   path: '',
@@ -34,6 +34,8 @@ export const DASHBOARD_ROUTES: Routes = [
             .then(m => m.OverviewPage)
       },
       { path: 'clientes', canActivate: [AuthGuard], loadChildren: () => import('../clientes/clientes.routes').then(m => m.CLIENTES_ROUTES) },
+
+      { path: 'planes', loadChildren: () => import('../planes/planes.route').then(m => m.PLANES_ROUTES) },
 
       // {
       //   path: 'equipos',
