@@ -1,0 +1,34 @@
+<div class="md:hidden space-y-4">
+
+  <div *ngFor="let client of clients" class="p-4 rounded-xl shadow border" [ngStyle]="{
+    'background-color':'var(--card-bg)',
+    'border-color':'var(--primary-color)'
+  }">
+
+    <div class="flex justify-between items-start mb-2">
+      <h3 class="font-semibold text-lg">{{client.name}}</h3>
+      <span class="text-xs px-2 py-1 rounded text-white" [ngStyle]="{'background-color':'var(--primary-color)'}">
+        {{client.plan}}
+      </span>
+    </div>
+
+    <p class="text-sm opacity-80 mb-1">📧 {{client.email}}</p>
+
+    <p class="text-sm mb-3">
+      Estado: <strong>{{client.status}}</strong>
+    </p>
+
+    <div class="flex gap-2">
+      <app-custom-button label="Editar" color="primary" size="sm" [disabled]="true" [fullWidth]="true"></app-custom-button>
+      <app-custom-button label="Eliminar" color="accent" size="sm" [fullWidth]="true"></app-custom-button>
+    </div>
+
+  </div>
+
+  <app-custom-paginacion
+    [currentPage]="currentPage"
+    [totalPages]="totalPagesCount"
+    (pageChange)="onPageChange($event)">
+  </app-custom-paginacion>
+
+</div>

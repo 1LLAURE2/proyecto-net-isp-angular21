@@ -12,6 +12,8 @@ import { PlanRepository } from '../../../../planes/dominio/repositories/plan.rep
 import { PlanRepositoryImpl } from '../../../../planes/infraestructure/repositories/plan.repository.impl';
 import { CustomSelect } from '../../../../../shared/components/custom-select/custom-select';
 import { forkJoin } from 'rxjs';
+import { ClientesMobile } from "../../components/clientes-mobile/clientes-mobile";
+import { ClientesDesktop } from "../../components/clientes-desktop/clientes-desktop";
 // import { SelectOption } from '../../../../../shared/models/SelectOption';
 // import { GetPlansSelectUseCase } from '../../../../planes/application/use-cases/get-plans-select.usecase';
 // import { CustomSelect } from '../../../../../shared/components/custom-select/custom-select';
@@ -20,7 +22,7 @@ import { forkJoin } from 'rxjs';
 @Component({
   standalone: true,
   selector: 'app-list-clientes',
-  imports: [CommonModule, FormsModule,CustomPaginacion,CustomButton,CustomSeleccionItemsPorPagina,CustomBadge,CustomSelect],
+  imports: [CommonModule, FormsModule, CustomButton, CustomSeleccionItemsPorPagina, CustomSelect, ClientesMobile, ClientesDesktop],
   templateUrl: './list-clientes.html',
   styleUrl: './list-clientes.css',
   providers: [

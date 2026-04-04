@@ -1,0 +1,52 @@
+<div class="hidden md:block rounded-xl shadow-sm overflow-hidden" [ngStyle]="{'background-color':'var(--card-bg)'}">
+
+  <div class="overflow-x-auto">
+
+    <table class="min-w-[700px] w-full text-sm">
+
+      <thead class="text-left border-b" [ngStyle]="{'border-color':'var(--primary-color)'}">
+        <tr class="text-xs uppercase tracking-wide">
+          <th class="px-6 py-3">Cliente</th>
+          <th class="px-6 py-3">Email</th>
+          <th class="px-6 py-3">Plan</th>
+          <th class="px-6 py-3">Estado</th>
+          <th class="px-6 py-3">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let client of clients" class="border-b transition" [ngStyle]="{
+          'border-color':'var(--primary-color)',
+          'background-color':'var(--card-bg)'
+        }" [class.hover:bg-gray-100]="!isDarkMode" [class.hover:bg-gray-800]="isDarkMode">
+
+          <td class="px-6 py-4 font-medium">{{client.name}}</td>
+          <td class="px-6 py-4">{{client.email}}</td>
+
+          <td class="px-6 py-4">
+            <app-custom-badge [value]="client.plan" type="plan"></app-custom-badge>
+          </td>
+
+          <td class="px-6 py-4">
+            <app-custom-badge [value]="client.status" type="status"></app-custom-badge>
+          </td>
+
+          <td class="px-6 py-4 flex gap-2">
+            <app-custom-button label="Editar" color="primary" size="sm" [disabled]="true" [fullWidth]="true"></app-custom-button>
+            <app-custom-button label="Eliminar" color="accent" size="sm" [fullWidth]="true"></app-custom-button>
+          </td>
+
+        </tr>
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <app-custom-paginacion
+    [currentPage]="currentPage"
+    [totalPages]="totalPagesCount"
+    (pageChange)="onPageChange($event)">
+  </app-custom-paginacion>
+
+</div>

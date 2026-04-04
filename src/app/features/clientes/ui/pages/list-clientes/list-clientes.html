@@ -89,192 +89,21 @@
   </div>
 
   <!-- CLIENTES MOBILE (CARDS) -->
-  <div class="md:hidden space-y-4">
-
-    <div *ngFor="let client of paginatedClients()" class="p-4 rounded-xl shadow border" [ngStyle]="{
-      'background-color':'var(--card-bg)',
-      'border-color':'var(--primary-color)'
-    }">
-
-      <div class="flex justify-between items-start mb-2">
-
-        <h3 class="font-semibold text-lg">
-          {{client.name}}
-        </h3>
-
-        <span class="text-xs px-2 py-1 rounded text-white" [ngStyle]="{'background-color':'var(--primary-color)'}">
-
-          {{client.plan}}
-
-        </span>
-
-      </div>
-
-      <p class="text-sm opacity-80 mb-1">
-        📧 {{client.email}}
-      </p>
-
-      <p class="text-sm mb-3">
-        Estado:
-        <strong>{{client.status}}</strong>
-      </p>
-
-      <div class="flex gap-2">
-
-        <!-- <button class="flex-1 px-3 py-2 text-white rounded-md text-sm"
-          [ngStyle]="{'background-color':'var(--primary-color)'}">
-          Editar
-        </button> -->
-        <app-custom-button
-          label="Editar"
-          color="primary"
-          size="sm"
-          [disabled]="true"
-          [fullWidth]="true">
-        </app-custom-button>
-
-        <!-- <button class="flex-1 px-3 py-2 text-white rounded-md text-sm"
-          [ngStyle]="{'background-color':'var(--accent-color)'}">
-          Eliminar
-        </button> -->
-        <app-custom-button
-          label="Eliminar"
-          color="accent"
-          size="sm"
-          [fullWidth]="true">
-        </app-custom-button>
-
-      </div>
-
-    </div>
-
-    <!-- PAGINACION MÓVIL -->
-    <app-custom-paginacion
-      [currentPage]="currentPage"
-      [totalPages]="totalPages()"
-      (pageChange)="changePage($event)">
-    </app-custom-paginacion>
-  </div>
+  <app-clientes-mobile
+    [clients]="paginatedClients()"
+    [currentPage]="currentPage"
+    [totalPagesCount]="totalPages()"
+    (pageChange)="changePage($event)">
+  </app-clientes-mobile>
 
 
   <!-- TABLA DESKTOP -->
-  <div class="hidden md:block rounded-xl shadow-sm overflow-hidden" [ngStyle]="{'background-color':'var(--card-bg)'}">
-
-    <div class="overflow-x-auto">
-
-      <table class="min-w-[700px] w-full text-sm">
-
-        <thead class="text-left border-b" [ngStyle]="{'border-color':'var(--primary-color)'}">
-
-          <tr class="text-xs uppercase tracking-wide">
-            <th class="px-6 py-3">Cliente</th>
-            <th class="px-6 py-3">Email</th>
-            <th class="px-6 py-3">Plan</th>
-            <th class="px-6 py-3">Estado</th>
-            <th class="px-6 py-3">Acciones</th>
-          </tr>
-
-        </thead>
-
-        <tbody>
-
-          <tr *ngFor="let client of paginatedClients()" class="border-b transition" [ngStyle]="{
-            'border-color':'var(--primary-color)',
-            'background-color':'var(--card-bg)'
-          }" [class.hover:bg-gray-100]="!isDarkMode" [class.hover:bg-gray-800]="isDarkMode">
-
-            <td class="px-6 py-4 font-medium">
-              {{client.name}}
-            </td>
-
-            <td class="px-6 py-4">
-              {{client.email}}
-            </td>
-
-            <td class="px-6 py-4">
-              <!-- <span
-                class="text-xs px-2 py-1 rounded text-white"
-                [ngStyle]="{'background-color':'var(--primary-color)'}">
-                  {{client.plan}}
-              </span> -->
-
-              <!-- <span
-                class="px-3 py-1 rounded-full text-xs font-semibold"
-                [ngClass]="{
-                  'bg-blue-100 text-blue-600': client.plan==='premium',
-                  'bg-green-100 text-green-600': client.plan==='basico',
-                  'bg-yellow-100 text-yellow-600': client.plan==='estandar'
-                }">
-
-                {{client.plan}}
-
-              </span> -->
-              <app-custom-badge
-                [value]="client.plan"
-                type="plan">
-              </app-custom-badge>
-            </td>
-
-            <td class="px-6 py-4">
-              <!-- {{client.status}} -->
-               <!-- <span
-                class="px-3 py-1 rounded-full text-xs font-semibold"
-                [ngClass]="{
-                  'bg-green-100 text-green-700': client.status==='activo',
-                  'bg-yellow-100 text-yellow-700': client.status==='pendiente',
-                  'bg-red-100 text-red-700': client.status==='inactivo'
-                }">
-                {{client.status}}
-              </span> -->
-              <app-custom-badge
-                [value]="client.status"
-                type="status">
-              </app-custom-badge>
-            </td>
-
-            <td class="px-6 py-4 flex gap-2">
-
-              <!-- <button class="px-3 py-1 text-white rounded-md text-xs"
-                [ngStyle]="{'background-color':'var(--primary-color)'}">
-                Editar
-              </button> -->
-              <app-custom-button
-                label="Editar"
-                color="primary"
-                size="sm"
-                [disabled]="true"
-                [fullWidth]="true">
-              </app-custom-button>
-
-              <!-- <button class="px-3 py-1 text-white rounded-md text-xs"
-                [ngStyle]="{'background-color':'var(--accent-color)'}">
-                Eliminar
-              </button> -->
-              <app-custom-button
-                label="Eliminar"
-                color="accent"
-                size="sm"
-                [fullWidth]="true">
-              </app-custom-button>
-
-            </td>
-
-          </tr>
-
-        </tbody>
-
-      </table>
-
-    </div>
-
-
-    <!-- PAGINACION -->
-    <app-custom-paginacion
-      [currentPage]="currentPage"
-      [totalPages]="totalPages()"
-      (pageChange)="changePage($event)">
-    </app-custom-paginacion>
-
-  </div>
+  <app-clientes-desktop
+    [clients]="paginatedClients()"
+    [currentPage]="currentPage"
+    [totalPagesCount]="totalPages()"
+    [isDarkMode]="isDarkMode"
+    (pageChange)="changePage($event)">
+  </app-clientes-desktop>
 
 </div>
