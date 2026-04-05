@@ -9,11 +9,13 @@ import { CustomPaginacion } from '../../../../../shared/components/custom-pagina
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map } from 'rxjs';
 import { CustomBadge } from "../../../../../shared/components/custom-badge/custom-badge";
+import { CustomButton } from "../../../../../shared/components/custom-button/custom-button";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-list-pagos',
   standalone: true,
-  imports: [CommonModule, CustomPaginacion, CustomBadge],
+  imports: [CommonModule, CustomPaginacion, CustomBadge, CustomButton,FormsModule],
   templateUrl: './list-pagos.html',
   styleUrl: './list-pagos.css',
 })
@@ -43,7 +45,9 @@ export class ListPagos implements OnInit {
     page: 1,
     per_page: 10,
     sort_by: 'payment_date',
-    sort_dir: 'desc'
+    sort_dir: 'desc',
+    date_from: undefined,
+    date_to: undefined
   };
 
   constructor(private useCase: GetPaymentsUsecase,  private cdr: ChangeDetectorRef) {}
@@ -88,5 +92,33 @@ export class ListPagos implements OnInit {
       this.filters.page = 1;
       this.loadPayments();
     }, 400);
+  }
+
+
+  resetFilters() {
+    this.filters = {
+      page: 1,
+      per_page: 10,
+      sort_by: 'payment_date',
+      sort_dir: 'desc',
+      date_from: undefined,
+      date_to: undefined
+    };
+
+    this.loadPayments();
+  }
+
+  onViewPayment(payment: Payment) {
+    console.log('Ver voucher 👉', payment);
+
+    // aquí puedes:
+    // abrir modal
+    // o navegar a detalle
+  }
+
+  onPay(payment?: Payment) {
+    console.log('Pagar 👉', payment);
+
+    // abrir modal de pago
   }
 }
