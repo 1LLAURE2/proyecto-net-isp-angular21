@@ -13,7 +13,15 @@ export class ClienteRepositoryImpl implements ClienteRepository {
 
   constructor(private api: ClienteApiService){}
 
-  getAll(): Observable<ClienteModel[]> {
+  getAll(params?: {
+      search?: string;
+      status?: string;
+      plan_id?: string | number;
+      page?: number;
+      per_page?: number;
+      sort?: string;
+      direction?: 'asc' | 'desc';
+    }): Observable<{ items: ClienteModel[], total_pages: number }> {
     return this.api.getAll().pipe(
       map(response => {
 
@@ -21,11 +29,10 @@ export class ClienteRepositoryImpl implements ClienteRepository {
         if (!isApiSuccess(response)) {
           throw new Error(response.message);
         }
-
-        // ✅ Aquí ya NO es null
-        return response.data.map(cliente =>
-          ClienteMapper.fromApi(cliente)
-        );
+        return {
+          items: response.data.map(ClienteMapper.fromApi),
+          total_pages: response.meta.last_page
+        };
       })
     );
     // throw new Error('Method not implemented.');

@@ -52,7 +52,7 @@ export class ListClientes {
   currentPage = 1
   itemsPerPage = 5
   totalPagesCount: number = 1;
-  pageSizeOptions = [5, 10, 50];   // opciones del select
+  pageSizeOptions = [2,5, 10, 50];   // opciones del select
 
   isDarkMode: boolean = false;
 
@@ -63,10 +63,12 @@ export class ListClientes {
       this.getClientes.execute(),
       this.getPlansSelect.execute()
     ]).subscribe(([clientesData, planesData]) => {
-      this.clientes = clientesData;
+      this.clientes = clientesData.items;
+      this.paginatedClientsList = clientesData.items; // si quieres paginación del backend
+      this.totalPagesCount = clientesData.total_pages;
+
       this.planes = planesData;
 
-      this.updateClients();
       this.cdr.detectChanges();
 
       console.log('Planes:', this.planes);
@@ -74,44 +76,26 @@ export class ListClientes {
     });
   }
 
+  // 🔹 Cargar clientes usando query params
+  loadClients() {
+    const params = {
+      search: this.searchTerm || undefined,
+      status: this.statusFilter || undefined,
+      plan_id: this.planFilter || undefined,
+      per_page: this.itemsPerPage,
+      page: this.currentPage,
+      sort: 'name',
+      direction: 'asc' as 'asc' | 'desc'
+    };
 
-  filteredClients(): ClienteModel[] {
+    this.getClientes.execute(params).subscribe(data => {
+      this.clientes = data.items;         // array de clientes
+      this.paginatedClientsList = data.items; // ya viene paginado del backend
+      this.totalPagesCount = data.total_pages;
+      this.cdr.detectChanges();
+    });
 
-    return this.clientes.filter(client => {
-
-      const matchesSearch =
-        client.nombre.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-        client.email.toLowerCase().includes(this.searchTerm.toLowerCase())
-
-      const matchesStatus =
-        this.statusFilter
-        ? (this.statusFilter === 'activo' && client.activo) ||
-          (this.statusFilter === 'inactivo' && !client.activo)
-        : true
-
-        console.log("Client PLAN"+client.plan.toString());
-        console.log("Client PLANFILTER"+this.planFilter);
-
-      const matchesPlan =
-        this.planFilter ? client.plan.toString() === this.planFilter.toString() : true
-
-      return matchesSearch && matchesStatus && matchesPlan
-
-    })
-
-  }
-
-  updateClients(): void {
-    // const filtered: ClienteModel[] = this.filteredClients();
-    this.filteredClientsList = this.filteredClients();
-
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-
-    this.paginatedClientsList = this.filteredClientsList.slice(start, end);
-
-    // Actualizar el total de páginas
-    this.totalPagesCount = Math.ceil(this.filteredClientsList.length / this.itemsPerPage);
+    console.log(this.clientes);
   }
 
   resetFilters() {
@@ -119,40 +103,27 @@ export class ListClientes {
     this.statusFilter = '';
     this.planFilter = '';
     this.currentPage=1;
-    this.updateClients();
+    this.loadClients();
   }
 
   addClient() {
     console.log('Abrir formulario de nuevo cliente')
   }
 
-  paginatedClients() {
-
-    const start = (this.currentPage - 1) * this.itemsPerPage
-    const end = start + this.itemsPerPage
-
-    return this.filteredClients().slice(start, end)
-
-  }
-
-  totalPages() {
-    return Math.ceil(this.filteredClients().length / this.itemsPerPage)
-  }
-
   changePage(page: number | string ) {
     if (page === '...') return;
 
     const pageNumber = Number(page);
-    if (pageNumber < 1 || pageNumber > this.totalPages()) return;
+    if (pageNumber < 1 || pageNumber > this.totalPagesCount) return;
 
     this.currentPage = pageNumber;
-    this.updateClients();
+    this.loadClients();
   }
 
   onPageSizeChange(newSize: number) {
     this.itemsPerPage = newSize;
     this.currentPage = 1; // resetear a la primera página al cambiar tamaño
-    this.updateClients();
+    this.loadClients();
   }
 
 }

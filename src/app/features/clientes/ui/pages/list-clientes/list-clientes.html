@@ -38,10 +38,10 @@
     [ngStyle]="{'background-color':'var(--card-bg)'}">
 
     <input type="text" placeholder="Buscar cliente..." class="w-full px-4 py-2 rounded-lg border focus:outline-none"
-      [ngStyle]="{'border-color':'var(--primary-color)'}" [(ngModel)]="searchTerm" />
+      [ngStyle]="{'border-color':'var(--primary-color)'}" [(ngModel)]="searchTerm" (ngModelChange)="loadClients()"/>
 
     <select [(ngModel)]="statusFilter" class="w-full px-4 py-2 rounded-lg border"
-      [ngStyle]="{'border-color':'var(--primary-color)'}">
+      [ngStyle]="{'border-color':'var(--primary-color)'}" (change)="loadClients()">
 
       <option value="">Estado</option>
       <option value="activo">Activo</option>
@@ -61,6 +61,7 @@
     <app-custom-select
       [options]="planes"
       [(value)]="planFilter"
+      (change)="loadClients()"
       placeholder="Seleccione un Plan">
     </app-custom-select>
 <!-- TODO : FIN SELECT DE PLANES -->
