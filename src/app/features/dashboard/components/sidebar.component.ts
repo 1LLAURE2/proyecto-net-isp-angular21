@@ -76,6 +76,17 @@ import { CommonModule } from '@angular/common';
             <span class="text-xl">💰</span>
             <span>Ingresos</span>
           </a>
+
+          <!--  -->
+          <a
+            routerLink="/dashboard/pagos"
+            routerLinkActive="bg-blue-600 text-white rounded-lg"
+            (click)="close()"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-700 transition"
+          >
+            <span class="text-xl">💰</span>
+            <span>Pagos</span>
+          </a>
         </nav>
       </div>
 

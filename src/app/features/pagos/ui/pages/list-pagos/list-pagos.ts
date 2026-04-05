@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { PaymentFilterDTO } from '../../../dominio/models/payment-filter.dto';
 import { Payment } from '../../../dominio/models/payment.model';
 import { GetPaymentsUsecase } from '../../../application/use-case/get-payments.usecase';
@@ -6,16 +6,28 @@ import { isApiSuccess } from '../../../../../shared/models/api-response.model';
 import { Meta } from '../../../dominio/models/api-response.model';
 import { CommonModule } from '@angular/common';
 import { CustomPaginacion } from '../../../../../shared/components/custom-paginacion/custom-paginacion';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map } from 'rxjs';
+import { CustomBadge } from "../../../../../shared/components/custom-badge/custom-badge";
 
 @Component({
   selector: 'app-list-pagos',
   standalone: true,
-  imports: [CommonModule, CustomPaginacion],
+  imports: [CommonModule, CustomPaginacion, CustomBadge],
   templateUrl: './list-pagos.html',
   styleUrl: './list-pagos.css',
 })
 export class ListPagos implements OnInit {
   @Output() pageChange = new EventEmitter<number>();
+  private breakpointObserver = inject(BreakpointObserver);
+
+  isDesktop$ = this.breakpointObserver.observe([
+    Breakpoints.Large,
+    Breakpoints.XLarge
+  ]).pipe(
+    map(result => result.matches)
+  );
+
 
   payments: Payment[] = [];
   meta: Meta = {
