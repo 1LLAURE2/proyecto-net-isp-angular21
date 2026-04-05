@@ -1,9 +1,9 @@
 
-  <div class="hidden md:block rounded-xl shadow-sm overflow-hidden" [ngStyle]="{'background-color':'var(--card-bg)'}">
+  <div class="rounded-xl shadow-sm overflow-hidden" [ngStyle]="{'background-color':'var(--card-bg)'}">
 
     <div class="overflow-x-auto">
 
-      <table class="min-w-[700px] w-full text-sm">
+      <table class="w-full text-sm">
 
         <thead class="text-left border-b" [ngStyle]="{'border-color':'var(--primary-color)'}">
           <tr class="text-xs uppercase tracking-wide">
@@ -32,10 +32,12 @@
               <app-custom-badge [value]="client.activo ? 'activo' : 'inactivo'" type="status"></app-custom-badge>
             </td>
 
-            <td class="px-6 py-4 flex gap-2">
-              <app-custom-button label="Editar" color="primary" size="sm" [disabled]="true"
-                [fullWidth]="true"></app-custom-button>
-              <app-custom-button label="Eliminar" color="accent" size="sm" [fullWidth]="true"></app-custom-button>
+            <td class="px-6 py-4">
+              <div class="flex flex-wrap gap-2">
+                <app-custom-button label="Editar" color="primary" size="sm" [disabled]="true"
+                  [fullWidth]="true"></app-custom-button>
+                <app-custom-button label="Eliminar" color="accent" size="sm" [fullWidth]="true"></app-custom-button>
+              </div>
             </td>
 
           </tr>

@@ -8,7 +8,7 @@ import { SidebarComponent } from "../components/sidebar.component";
   imports: [RouterModule, SidebarComponent,CommonModule],
   template: `
     <div
-      class="flex min-h-screen bg-background dark:bg-background-dark text-text dark:text-text-dark"
+      class="flex min-h-screen overflow-x-hidden bg-background dark:bg-background-dark text-text dark:text-text-dark"
     >
 
       <!-- Sidebar -->

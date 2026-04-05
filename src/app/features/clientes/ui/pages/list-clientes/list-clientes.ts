@@ -11,10 +11,11 @@ import { SelectOption } from '../../../../../shared/models/SelectOption';
 import { PlanRepository } from '../../../../planes/dominio/repositories/plan.repository';
 import { PlanRepositoryImpl } from '../../../../planes/infraestructure/repositories/plan.repository.impl';
 import { CustomSelect } from '../../../../../shared/components/custom-select/custom-select';
-import { forkJoin } from 'rxjs';
+import { forkJoin, map, Observable } from 'rxjs';
 import { ClientesMobile } from "../../components/clientes-mobile/clientes-mobile";
 import { ClientesDesktop } from "../../components/clientes-desktop/clientes-desktop";
 import { ClienteModel } from '../../../domain/cliente.model';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 // import { SelectOption } from '../../../../../shared/models/SelectOption';
 // import { GetPlansSelectUseCase } from '../../../../planes/application/use-cases/get-plans-select.usecase';
 // import { CustomSelect } from '../../../../../shared/components/custom-select/custom-select';
@@ -33,9 +34,23 @@ import { ClienteModel } from '../../../domain/cliente.model';
 })
 export class ListClientes {
 
+  isDesktop$: Observable<boolean>;
+
   private cdr = inject(ChangeDetectorRef);
   private getClientes = inject(GetClientesUseCase);
   private getPlansSelect = inject(GetPlansSelectUseCase);
+
+  private breakpointObserver = inject(BreakpointObserver);
+
+  constructor() {
+    this.isDesktop$ = this.breakpointObserver.observe([
+      Breakpoints.Large,
+      Breakpoints.XLarge
+    ]).pipe(
+      map(result => result.matches)
+    );
+  }
+
 
   planes: SelectOption[] = [];
 

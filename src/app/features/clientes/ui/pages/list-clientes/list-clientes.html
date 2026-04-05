@@ -1,4 +1,4 @@
-<div class="min-h-screen p-4 md:p-6" [ngStyle]="{'background-color':'var(--bg-color)', 'color':'var(--text-color)'}">
+<div class="min-h-screen p-4 md:p-6 overflow-x-hidden" [ngStyle]="{'background-color':'var(--bg-color)', 'color':'var(--text-color)'}">
 
   <!-- HEADER -->
   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
@@ -90,22 +90,27 @@
   </div>
 
   <!-- CLIENTES MOBILE (CARDS) -->
-  <app-clientes-mobile
-    [clients]="paginatedClientsList"
-    [currentPage]="currentPage"
-    [totalPagesCount]="totalPagesCount"
-    (pageChange)="changePage($event)">
-  </app-clientes-mobile>
-
-
-  <!-- TABLA DESKTOP -->
-  <div *ngIf="clientes.length > 0 || planes.length > 0">
-    <app-clientes-desktop
+  <ng-template #mobileView>
+    <app-clientes-mobile
       [clients]="paginatedClientsList"
       [currentPage]="currentPage"
       [totalPagesCount]="totalPagesCount"
-      [isDarkMode]="isDarkMode"
       (pageChange)="changePage($event)">
-    </app-clientes-desktop>
-  </div>
+    </app-clientes-mobile>
+  </ng-template>
+
+
+  <!-- TABLA DESKTOP -->
+  <ng-container *ngIf="isDesktop$ | async; else mobileView">
+    <div *ngIf="clientes.length > 0 || planes.length > 0">
+      <app-clientes-desktop
+        [clients]="paginatedClientsList"
+        [currentPage]="currentPage"
+        [totalPagesCount]="totalPagesCount"
+        [isDarkMode]="isDarkMode"
+        (pageChange)="changePage($event)">
+      </app-clientes-desktop>
+    </div>
+  </ng-container>
+
 </div>
