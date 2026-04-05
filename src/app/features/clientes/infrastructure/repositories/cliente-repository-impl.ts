@@ -31,7 +31,7 @@ export class ClienteRepositoryImpl implements ClienteRepository {
         }
         return {
           items: response.data.map(ClienteMapper.fromApi),
-          total_pages: response.meta.last_page
+          total_pages: response.meta?.last_page ?? 0
         };
       })
     );

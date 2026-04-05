@@ -1,0 +1,24 @@
+<p>Total registros: {{ payments.length }}</p>
+<div>
+  {{ payments | json }}
+</div>
+<hr>
+<h1>Inicio de Pagos</h1>
+<input type="text" (input)="onSearch($event.target.value)" placeholder="Buscar..." />
+
+<table>
+  @for (p of payments; track p.id){
+    <tr>
+      <td>{{ p.transaction }}</td>
+      <td>{{ p.client.name }}</td>
+      <td>{{ p.amount }}</td>
+      <td>{{ p.method }}</td>
+    </tr>
+  }
+</table>
+
+<app-custom-paginacion
+  [currentPage]="meta.current_page"
+  [totalPages]="meta.last_page"
+  (pageChange)="onPageChange($event)">
+</app-custom-paginacion>
