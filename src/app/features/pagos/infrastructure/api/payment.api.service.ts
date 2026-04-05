@@ -24,4 +24,10 @@ export class PaymentApiService {
 
     return this.http.get<ApiResponse<Payment[]>>(this.baseUrl, { params });
   }
+
+  getVoucher(id: number) {
+    return this.http.get(`${this.baseUrl}/${id}/voucher`, {
+      responseType: 'blob'
+    });
+  }
 }

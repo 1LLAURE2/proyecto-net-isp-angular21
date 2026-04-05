@@ -11,6 +11,7 @@ import { map } from 'rxjs';
 import { CustomBadge } from "../../../../../shared/components/custom-badge/custom-badge";
 import { CustomButton } from "../../../../../shared/components/custom-button/custom-button";
 import { FormsModule } from '@angular/forms';
+import { GetVoucherUsecase } from '../../../application/use-case/get-voucher.usecase';
 
 @Component({
   selector: 'app-list-pagos',
@@ -50,7 +51,7 @@ export class ListPagos implements OnInit {
     date_to: undefined
   };
 
-  constructor(private useCase: GetPaymentsUsecase,  private cdr: ChangeDetectorRef) {}
+  constructor(private useCase: GetPaymentsUsecase,  private getVoucherUsecase: GetVoucherUsecase,private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     console.log('INIT 🔥');
@@ -110,7 +111,15 @@ export class ListPagos implements OnInit {
 
   onViewPayment(payment: Payment) {
     console.log('Ver voucher 👉', payment);
+    this.getVoucherUsecase.execute(payment.id).subscribe(blob => {
+      const url = window.URL.createObjectURL(blob);
+      window.open(url, '_blank');
+    }, error => {
+      console.error(error);
+      alert('No se pudo visualizar el voucher');
+    });
 
+    // window.open(payment.voucher_url, '_blank');
     // aquí puedes:
     // abrir modal
     // o navegar a detalle

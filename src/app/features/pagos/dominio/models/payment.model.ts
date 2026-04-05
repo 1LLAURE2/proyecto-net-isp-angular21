@@ -4,7 +4,7 @@ export interface Payment {
   amount: string;
   method: string;
   payment_date: string;
-
+  voucher_url: string;
   client: {
     id: number;
     name: string;
