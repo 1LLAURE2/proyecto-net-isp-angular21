@@ -39,6 +39,8 @@ export const DASHBOARD_ROUTES: Routes = [
 
       { path: 'pagos', loadChildren: () => import('../pagos/pagos.route').then(m => m.PAGOS_ROUTES) },
 
+      {path:'gastos',loadChildren: ()=> import('../gastos/gasto.routes').then(m=>m.GASTO_ROUTES)},
+
       // {
       //   path: 'equipos',
       //   loadComponent: () =>

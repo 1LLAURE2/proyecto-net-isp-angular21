@@ -1,0 +1,94 @@
+<div class="bg-white rounded-xl shadow overflow-hidden">
+
+  <!-- DESKTOP -->
+  <div class="hidden md:block overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead class="bg-gray-100">
+        <tr>
+          <th (click)="onSort('concept')" class="cursor-pointer p-2">Concepto</th>
+          <th (click)="onSort('category')" class="cursor-pointer p-2">Categoría</th>
+          <th (click)="onSort('amount')" class="cursor-pointer p-2">Monto</th>
+          <th (click)="onSort('expense_date')" class="cursor-pointer p-2">Fecha</th>
+          <th class="p-2">Proveedor</th>
+          <th class="p-2">Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let e of expenses" class="border-t">
+          <td class="p-2">{{ e.concept }}</td>
+          <td class="p-2">
+            <!-- {{ e.category }} -->
+            <app-custom-badge [value]="e.category" type="category">
+            </app-custom-badge>
+          </td>
+          <td class="p-2 font-semibold" [ngClass]="e.amount > 0 ? 'text-red-600' : 'text-green-600'">S/ {{ e.amount }}
+          </td>
+          <td class="p-2">{{ e.expenseDate | date:'dd/MM/yyyy' }}</td>
+          <td class="p-2">{{ e.provider }}</td>
+          <td class="p-2">
+            <div class="flex gap-2">
+              <!-- <button class="text-blue-600">Ver</button>
+            <button class="text-yellow-600">Editar</button>
+            <button class="text-red-600">Eliminar</button> -->
+              <app-custom-button size="sm" variant="outline" color="primary" (onClick)="onView(e.id)" label="Ver">
+                <span icon>👁️</span>
+              </app-custom-button>
+
+              <app-custom-button size="sm" variant="outline" color="accent" (onClick)="onEdit(e.id)" label="Editar">
+                <span icon>✏️</span>
+              </app-custom-button>
+
+              <app-custom-button size="sm" variant="outline" color="primary" (onClick)="onDelete(e.id)"
+                label="Eliminar">
+                <span icon>🗑️</span>
+              </app-custom-button>
+              <!-- <app-custom-button label="Eliminar" color="accent" size="sm" [fullWidth]="true"></app-custom-button> -->
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- MOBILE 🔥 -->
+  <div class="md:hidden space-y-3 p-3">
+    <div *ngFor="let e of expenses" class="border rounded p-3 shadow-sm">
+      <div class="font-bold">{{ e.concept }}</div>
+      <div class="text-sm text-gray-500">{{ e.category }}</div>
+      <div class="text-sm">S/ {{ e.amount }}</div>
+      <div class="text-sm">
+        <!-- {{ e.expenseDate | date }} -->
+          {{ e.expenseDate | date:'dd/MM/yyyy' }}
+      </div>
+      <div class="text-sm">{{ e.provider }}</div>
+
+      <div class="flex gap-2 mt-2">
+        <!-- <button class="text-blue-600">Ver</button>
+        <button class="text-yellow-600">Editar</button>
+        <button class="text-red-600">Eliminar</button> -->
+        <!-- VER -->
+        <app-custom-button size="sm" variant="outline" color="primary" (onClick)="onView(e.id)" title="Ver">
+
+          <span icon>👁️</span>
+
+        </app-custom-button>
+
+        <!-- EDITAR -->
+        <app-custom-button size="sm" variant="outline" color="accent" (onClick)="onEdit(e.id)" title="Editar">
+
+          <span icon>✏️</span>
+
+        </app-custom-button>
+
+        <!-- ELIMINAR -->
+        <app-custom-button size="sm" variant="outline" color="primary" (onClick)="onDelete(e.id)" title="Eliminar">
+
+          <span icon>🗑️</span>
+
+        </app-custom-button>
+      </div>
+    </div>
+  </div>
+
+</div>

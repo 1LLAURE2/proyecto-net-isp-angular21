@@ -30,4 +30,20 @@ export class PaymentApiService {
       responseType: 'blob'
     });
   }
+
+  // createPayment(data: PaymentCreateDto, file?: File) {
+  //   const formData = new FormData();
+
+  //   formData.append('client_id', data.client_id.toString());
+  //   formData.append('invoice_id', data.invoice_id.toString());
+  //   formData.append('amount', data.amount.toString());
+  //   formData.append('method', data.method);
+  //   formData.append('payment_date', data.payment_date);
+
+  //   if (file) {
+  //     formData.append('voucher', file);
+  //   }
+
+  //   return this.http.post<{ message: string; data: any }>(`${this.baseUrl}`, formData);
+  // }
 }

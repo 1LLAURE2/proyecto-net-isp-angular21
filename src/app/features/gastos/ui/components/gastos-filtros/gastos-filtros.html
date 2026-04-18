@@ -1,0 +1,37 @@
+<div class="bg-white p-4 rounded-xl shadow space-y-3">
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+
+    <input type="text" [(ngModel)]="filters.search"
+      placeholder="Buscar..."
+      class="border rounded p-2 w-full" />
+
+    <input type="number" [(ngModel)]="filters.min_amount"
+      placeholder="Monto mínimo"
+      class="border rounded p-2 w-full" />
+
+    <input type="number" [(ngModel)]="filters.max_amount"
+      placeholder="Monto máximo"
+      class="border rounded p-2 w-full" />
+
+    <input type="date" [(ngModel)]="filters.date_from"
+      class="border rounded p-2 w-full" />
+
+    <input type="date" [(ngModel)]="filters.date_to"
+      class="border rounded p-2 w-full" />
+
+  </div>
+
+  <div class="flex flex-wrap gap-2">
+    <button (click)="applyFilters()"
+      class="bg-blue-600 text-white px-4 py-2 rounded cursor-pointer">
+      Filtrar
+    </button>
+
+    <button (click)="reset()"
+      class="bg-gray-400 text-white px-4 py-2 rounded cursor-pointer">
+      Limpiar
+    </button>
+  </div>
+
+</div>

@@ -1,0 +1,24 @@
+<div class="p-4 space-y-4">
+
+  <!-- 🔍 FILTROS -->
+  <app-gastos-filtros
+    (filtersChange)="onFiltersChange($event)">
+  </app-gastos-filtros>
+
+  <!-- 📊 TABLA -->
+  <app-gastos-tabla-desktop
+    [expenses]="expenses()"
+    [loading]="loading()"
+    (sort)="onSort($event)">
+  </app-gastos-tabla-desktop>
+
+  <!-- 📄 PAGINACIÓN -->
+  <div class="flex justify-center">
+    <app-custom-paginacion
+      [currentPage]="meta().currentPage"
+      [totalPages]="meta().lastPage"
+      (pageChange)="onPageChange($event)">
+    </app-custom-paginacion>
+  </div>
+
+</div>

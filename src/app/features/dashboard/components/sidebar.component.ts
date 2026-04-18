@@ -41,6 +41,7 @@ import { CommonModule } from '@angular/common';
             <span>Inicio</span>
           </a>
 
+          <!-- ADMINISTRACIÓN -->
           <div
             class="uppercase text-xs text-gray-400 dark:text-gray-500 font-semibold mt-6 mb-2"
           >
@@ -67,14 +68,26 @@ import { CommonModule } from '@angular/common';
             <span>Equipos</span>
           </a>
 
+          <!-- FINANZAS -->
+          <div class="uppercase text-xs text-gray-400 font-semibold mt-6 mb-2">
+            Finanzas
+          </div>
+
           <a
-            routerLink="/dashboard/administracion/ingresos"
+            routerLink="/dashboard/ingresos"
             routerLinkActive="bg-blue-600 text-white rounded-lg"
             (click)="close()"
             class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-700 transition"
           >
-            <span class="text-xl">💰</span>
+            <span class="text-xl">💵</span>
             <span>Ingresos</span>
+          </a>
+
+          <a routerLink="/dashboard/gastos" routerLinkActive="bg-blue-600 text-white rounded-lg"
+            (click)="close()"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-700 transition">
+            <span class="text-xl">📉</span>
+            <span>Gastos</span>
           </a>
 
           <!--  -->
@@ -84,8 +97,48 @@ import { CommonModule } from '@angular/common';
             (click)="close()"
             class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-700 transition"
           >
-            <span class="text-xl">💰</span>
+            <span class="text-xl">💳</span>
             <span>Pagos</span>
+          </a>
+
+          <a routerLink="/dashboard/facturacion" routerLinkActive="bg-blue-600 text-white rounded-lg"
+            (click)="close()"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-700 transition">
+            <span class="text-xl">🧾</span>
+            <span>Facturación</span>
+          </a>
+
+          <a routerLink="/dashboard/balance" routerLinkActive="bg-blue-600 text-white rounded-lg"
+            (click)="close()"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-700 transition">
+            <span class="text-xl">📈</span>
+            <span>Balance</span>
+          </a>
+
+          <!-- SEGURIDAD -->
+          <div class="uppercase text-xs text-gray-400 font-semibold mt-6 mb-2">
+            Seguridad
+          </div>
+
+          <a routerLink="/dashboard/usuarios" routerLinkActive="bg-blue-600 text-white rounded-lg"
+            (click)="close()"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-700 transition">
+            <span class="text-xl">👤</span>
+            <span>Usuarios</span>
+          </a>
+
+          <a routerLink="/dashboard/roles" routerLinkActive="bg-blue-600 text-white rounded-lg"
+            (click)="close()"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-700 transition">
+            <span class="text-xl">🛡️</span>
+            <span>Roles</span>
+          </a>
+
+          <a routerLink="/dashboard/permisos" routerLinkActive="bg-blue-600 text-white rounded-lg"
+            (click)="close()"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-700 transition">
+            <span class="text-xl">🔐</span>
+            <span>Permisos</span>
           </a>
         </nav>
       </div>

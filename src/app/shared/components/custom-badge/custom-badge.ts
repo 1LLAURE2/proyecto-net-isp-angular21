@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CustomBadge {
   @Input() value!: string;
-  @Input() type: 'plan' | 'method' | 'status' = 'status';
+  @Input() type: 'plan' | 'method' | 'status' | 'category' = 'status';
 
   getClasses() {
 
@@ -43,6 +43,19 @@ export class CustomBadge {
           return 'bg-yellow-100 text-yellow-700';
         case 'yape':
           return 'bg-red-100 text-red-700';
+      }
+    }
+
+    if (this.type === 'category') {
+      switch (this.value.toLowerCase()) {
+        case 'servicios':
+          return 'bg-blue-100 text-blue-700';
+        case 'comida':
+          return 'bg-green-100 text-green-700';
+        case 'transporte':
+          return 'bg-yellow-100 text-yellow-700';
+        default:
+          return 'bg-gray-100 text-gray-600';
       }
     }
 
