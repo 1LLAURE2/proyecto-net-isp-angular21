@@ -1,5 +1,27 @@
 <div class="p-4 space-y-4">
 
+  <!-- 🔝 HEADER / ACCIONES -->
+  <div class="flex justify-between items-center">
+    <h1 class="text-lg font-semibold">Gastos</h1>
+
+    <!-- <button
+      (click)="onCreate()"
+      class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 cursor-pointer"
+    >
+      + Nuevo gasto
+    </button> -->
+    <app-custom-button
+      label="Nuevo Gasto"
+      variant="solid"
+      color="secondary"
+      size="md"
+      (onClick)="onCreate()">
+
+      <span icon>➕</span>
+
+    </app-custom-button>
+  </div>
+
   <!-- 🔍 FILTROS -->
   <app-gastos-filtros
     (filtersChange)="onFiltersChange($event)">

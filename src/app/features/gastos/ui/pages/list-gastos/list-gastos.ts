@@ -4,10 +4,11 @@ import { CustomPaginacion } from "../../../../../shared/components/custom-pagina
 import { GastosFiltros } from '../../components/gastos-filtros/gastos-filtros';
 import { GastosTablaDesktop } from '../../components/gastos-tabla-desktop/gastos-tabla-desktop';
 import { CommonModule } from '@angular/common';
+import { CustomButton } from "../../../../../shared/components/custom-button/custom-button";
 
 @Component({
   selector: 'app-list-gastos',
-  imports: [CommonModule,CustomPaginacion, GastosFiltros,GastosTablaDesktop],
+  imports: [CommonModule, CustomPaginacion, GastosFiltros, GastosTablaDesktop, CustomButton],
   templateUrl: './list-gastos.html',
   styleUrl: './list-gastos.css',
 })
@@ -33,5 +34,9 @@ export class ListGastos implements OnInit{
 
   onSort(field: string) {
     this.useCase.changeSort(field);
+  }
+
+  onCreate(){
+    console.log("NUEVO GASTO");
   }
 }
