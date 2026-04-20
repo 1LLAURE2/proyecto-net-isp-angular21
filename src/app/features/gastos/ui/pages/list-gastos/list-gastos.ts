@@ -1,14 +1,15 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { GetExpensesUseCase } from '../../../application/use-cases/get-expenses.use-case';
 import { CustomPaginacion } from "../../../../../shared/components/custom-paginacion/custom-paginacion";
 import { GastosFiltros } from '../../components/gastos-filtros/gastos-filtros';
 import { GastosTablaDesktop } from '../../components/gastos-tabla-desktop/gastos-tabla-desktop';
 import { CommonModule } from '@angular/common';
 import { CustomButton } from "../../../../../shared/components/custom-button/custom-button";
+import { GastosFormModal } from "../../components/gastos-form-modal/gastos-form-modal";
 
 @Component({
   selector: 'app-list-gastos',
-  imports: [CommonModule, CustomPaginacion, GastosFiltros, GastosTablaDesktop, CustomButton],
+  imports: [CommonModule, CustomPaginacion, GastosFiltros, GastosTablaDesktop, CustomButton, GastosFormModal],
   templateUrl: './list-gastos.html',
   styleUrl: './list-gastos.css',
 })
@@ -38,5 +39,23 @@ export class ListGastos implements OnInit{
 
   onCreate(){
     console.log("NUEVO GASTO");
+  }
+
+  // MODAL GASTO
+  showModal = signal(false);
+
+  openModal() {
+    this.showModal.set(true);
+  }
+
+  closeModal() {
+    this.showModal.set(false);
+  }
+
+  createGasto(formData: FormData) {
+    console.log(formData);
+
+    // 🔥 aquí llamas a tu use case de create (luego lo hacemos)
+    this.closeModal();
   }
 }

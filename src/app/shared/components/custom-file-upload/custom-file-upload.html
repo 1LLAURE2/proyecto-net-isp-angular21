@@ -1,0 +1,47 @@
+<div class="space-y-2">
+
+  <!-- DROPZONE -->
+  <label
+    class="block p-4 rounded-lg border-2 border-dashed text-center cursor-pointer hover:opacity-80"
+    style="border-color: rgba(0,0,0,0.2);">
+
+    <input #fileInput type="file" class="hidden" (change)="onFileChange($event)" />
+
+    <div *ngIf="!file()" class="opacity-70">
+      ⬆️
+      <p class="text-sm">Arrastra o selecciona un archivo</p>
+    </div>
+
+    <!-- PREVIEW -->
+    <div *ngIf="file()" class="space-y-2">
+
+      <!-- IMAGEN -->
+      <img *ngIf="isImage()"
+        [src]="previewUrl()"
+        class="max-h-40 w-auto mx-auto rounded-lg object-contain" />
+
+      <!-- ARCHIVO NO IMAGEN -->
+      <div *ngIf="!isImage()" class="text-sm">
+        📄 {{ file()?.name }}
+      </div>
+
+    </div>
+
+  </label>
+
+  <!-- ACTIONS -->
+  <div *ngIf="file()" class="flex justify-between items-center text-sm">
+
+    <span class="truncate">
+      {{ file()?.name }}
+    </span>
+
+    <button
+      (click)="removeFile()"
+      class="text-red-500 hover:underline">
+      Eliminar
+    </button>
+
+  </div>
+
+</div>

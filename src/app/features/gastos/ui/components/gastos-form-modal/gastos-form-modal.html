@@ -1,0 +1,119 @@
+<div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+
+  <!-- CARD -->
+  <div class="w-full max-w-md max-h-[90vh] overflow-y-auto rounded-xl shadow-lg p-6 space-y-4"
+    style="background-color: var(--card-bg); color: var(--text-color);">
+
+    <!-- HEADER -->
+    <div class="flex justify-between items-center">
+      <h2 class="text-lg font-semibold">Registrar Gasto</h2>
+      <button (click)="closeModal()" class="opacity-70 hover:opacity-100">
+        ✕
+      </button>
+    </div>
+
+    <!-- FORM -->
+    <div class="space-y-4">
+
+      <!-- CONCEPTO -->
+      <div>
+        <label class="text-sm opacity-70">Concepto</label>
+        <input type="text" [(ngModel)]="form.concept" placeholder="Descripción del gasto"
+          class="w-full mt-1 px-3 py-2 rounded-lg border outline-none focus:ring-2" style="
+            background-color: var(--bg-color);
+            border-color: rgba(0,0,0,0.1);
+            color: var(--text-color);
+            --tw-ring-color: var(--primary-color);
+          ">
+      </div>
+
+      <!-- GRID -->
+      <div class="grid grid-cols-2 gap-3">
+
+        <!-- CATEGORIA -->
+        <div>
+          <label class="text-sm opacity-70">Categoría</label>
+          <select [(ngModel)]="form.category" class="w-full mt-1 px-3 py-2 rounded-lg border" style="
+              background-color: var(--bg-color);
+              border-color: rgba(0,0,0,0.1);
+              color: var(--text-color);
+            ">
+            <option value="">Seleccionar</option>
+            <option *ngFor="let c of categories" [value]="c">{{ c }}</option>
+          </select>
+        </div>
+
+        <!-- MONTO -->
+        <div>
+          <label class="text-sm opacity-70">Monto</label>
+          <input type="number" [(ngModel)]="form.amount" placeholder="0.00"
+            class="w-full mt-1 px-3 py-2 rounded-lg border" style="
+              background-color: var(--bg-color);
+              border-color: rgba(0,0,0,0.1);
+              color: var(--text-color);
+            ">
+        </div>
+
+      </div>
+
+      <!-- PROVEEDOR -->
+      <div>
+        <label class="text-sm opacity-70">Proveedor</label>
+        <input type="text" [(ngModel)]="form.provider" placeholder="Nombre del proveedor"
+          class="w-full mt-1 px-3 py-2 rounded-lg border" style="
+            background-color: var(--bg-color);
+            border-color: rgba(0,0,0,0.1);
+            color: var(--text-color);
+          ">
+      </div>
+
+      <!-- NOTAS -->
+      <div>
+        <label class="text-sm opacity-70">Notas</label>
+        <textarea [(ngModel)]="form.notes" rows="3" placeholder="Notas adicionales..."
+          class="w-full mt-1 px-3 py-2 rounded-lg border" style="
+            background-color: var(--bg-color);
+            border-color: rgba(0,0,0,0.1);
+            color: var(--text-color);
+          ">
+        </textarea>
+      </div>
+
+      <!-- FILE -->
+      <div>
+        <label class="text-sm opacity-70">Comprobante</label>
+
+        <div class="mt-2">
+          <app-custom-file-upload (fileSelected)="form.voucher = $event">
+          </app-custom-file-upload>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="flex justify-end gap-2 pt-2">
+
+      <!-- CANCELAR -->
+      <button (click)="closeModal()" class="px-4 py-2 rounded-lg border" style="
+          border-color: var(--primary-color);
+          color: var(--primary-color);
+        ">
+        Cancelar
+      </button>
+
+      <!-- REGISTRAR -->
+      <button (click)="submit()" class="px-4 py-2 rounded-lg text-white" style="
+          background: linear-gradient(
+            to right,
+            var(--primary-color),
+            var(--secondary-color)
+          );
+        ">
+        Registrar
+      </button>
+
+    </div>
+
+  </div>
+</div>

@@ -15,7 +15,7 @@
       variant="solid"
       color="secondary"
       size="md"
-      (onClick)="onCreate()">
+      (onClick)="openModal()">
 
       <span icon>➕</span>
 
@@ -44,3 +44,10 @@
   </div>
 
 </div>
+
+<app-gastos-form-modal
+  *ngIf="showModal()"
+  (close)="closeModal()"
+  (save)="createGasto($event)"
+>
+</app-gastos-form-modal>
